@@ -1,0 +1,57 @@
+general:
+  date:
+    invalid:
+      key: general.date.invalid
+      message: La fecha es inválida.
+      message_eng: Date is not valid.
+      status: 400
+  time:
+    invalid:
+      key: general.time.invalid
+      message: La hora es inválida.
+      message_eng: Time is not valid.
+      status: 400
+  item:
+    already_exist:
+      key: general.item.already_exist
+      message: El ítem ya existe.
+      message_eng: This item already exists.
+      status: 400
+    not_exist:
+      key: general.item.not_exist
+      message: El ítem no existe.
+      message_eng: This item does not exist.
+      status: 404
+filter:
+  clients:
+    not_found:
+      key: filter.clients.not_found
+      message: El cliente no fue encontrado en el sistema.
+      message_eng: The user was not found in the system.
+      status: 404
+    series:
+      not_found:
+        key: filter.clients.series.not_found
+        message: El cliente no cuenta con series.
+        message_eng: The user does not have series.
+        status: 404
+clients:
+  series:
+    not_associated:
+      key: clients.series.not_associated
+      message: El cliente no tiene series asignadas para esta red social.
+      message_eng: The client has no series assigned to this social network.
+      status: 404
+type_events:
+  series:
+    not_found:
+      key: type_events.series.not_found
+      message: La serie seleccionada no se encuentra en el sistema.
+      message_eng: The selected series is not found in the system.
+      status: 404
+  subseries:
+    not_found:
+      key: type_events.subseries.not_found
+      message: La subserie seleccionada no se encuentra en el sistema.
+      message_eng: The selected subseries is not found in the system.
+      status: 404
