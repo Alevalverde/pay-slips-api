@@ -1,0 +1,2597 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  termsOfService: 'http://swagger.io/terms/'
+  title: QSocialNow Networks API
+  license:
+    name: ISC
+  contact:
+    name: Midas Consultores
+    email: ggimenez@midasconsultores.com.ar
+security:
+  - bearerAuth: []
+paths:
+  '/clients/{id}/networks/{networkName}/events-evolution':
+    post:
+      tags:
+        - Charts
+      summary: Get data to event evolution chart
+      description: This endpoint returns data to the event evolution chart by selected series or subseries
+      operationId: getEventEvolutionChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+        - $ref: '#/components/parameters/typeEvents'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetEventEvolutionChartResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/frequent-hashtags':
+    post:
+      tags:
+        - Charts
+      summary: Get data to frequent hashtags chart
+      description: This endpoint returns data to the frequent hashtags chart
+      operationId: getFrequentHashtagsChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetFrequentHashtagsChartResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/evolutionary-polarity':
+    post:
+      tags:
+        - Charts
+      summary: Get data to events evolutionary polarity chart
+      description: This endpoint returns data to the events evolutionary polarity chart
+      operationId: getEvolutionaryPolarityChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetEvolutionaryPolarityChartResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/heatmap':
+    post:
+      tags:
+        - Charts
+      summary: Get data to feeling heatmap chart
+      description: This endpoint returns data to feeling heatmap chart by selected type, relative or absolute.
+      operationId: getHeatMapChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+        - $ref: '#/components/parameters/typeHeatMap'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetHeatMapChartResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/bigrams':
+    post:
+      tags:
+        - Charts
+      summary: Get data to bigrams chart
+      description: This endpoint returns data to the bigrams chart
+      operationId: getBigramChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetBigramChartResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/keywords':
+    post:
+      tags:
+        - Charts
+      summary: Get data to keywords chart
+      description: This endpoint returns data to the keywords chart
+      operationId: getKeywordsChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetKeywordsChartResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/trigrams':
+    post:
+      tags:
+        - Charts
+      summary: Get data to trigram chart
+      description: This endpoint returns data to the trigram chart
+      operationId: getTrigramsChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetTrigramChartResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/participation':
+    post:
+      tags:
+        - Charts
+      summary: Get data to participation chart
+      description: This endpoint returns data to the participation chart by selected series or subseries
+      operationId: getParticipationChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+        - $ref: '#/components/parameters/typeEvents'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetParticipationChartResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/authors-engagement':
+    post:
+      tags:
+        - Charts
+      summary: Get data to authors engagement chart
+      description: This endpoint returns data for the authors engagement chart by selected filters.
+      operationId: getAuthorsEngagementChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetAuthorsEngChartResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/events-distribution':
+    post:
+      tags:
+        - Charts
+      summary: Get data to events distribution chart
+      description: This endpoint returns data to the events distribution chart by selected series or subseries
+      operationId: getEventsDsitributionChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+        - $ref: '#/components/parameters/typeEvents'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetEventsDistChartResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/summary':
+    post:
+      tags:
+        - Charts
+      security:
+        - bearerAuth: []
+      summary: Get events / authors summary
+      description: This endpoint returns the summary of events and authors
+      operationId: getSummaryEventsAndAuthors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetSummaryResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/detailed-event-view':
+    post:
+      tags:
+        - Charts
+      summary: Get data to detailed event view chart
+      description: This endpoint returns data to the detailed event view chart
+      operationId: getDetailedEventViewChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/page_size'
+        - $ref: '#/components/parameters/typeSort'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetDetailedEventViewResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/TWITTER/event-map':
+    post:
+      tags:
+        - Charts
+      summary: Get tweet events map
+      description: This endpoint returns the map of tweet events
+      operationId: getEventsMap
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/locations'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetEventsMapResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/global-temporal-category-distribution':
+    post:
+      tags:
+        - Charts
+      summary: Get data to global temporal category distribution charts
+      description: This endpoint returns data to the global temporal category distribution charts
+      operationId: getGlobalCategoryDistribution
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetGlobalCategoryDistributionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/temporal-distribution-category-model':
+    post:
+      tags:
+        - Charts
+      summary: Get data to temporal distribution category model charts
+      description: This endpoint returns data to temporal distribution category model charts
+      operationId: getTemporalCategoryDistribution
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+        - $ref: '#/components/parameters/modelType'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetTemporalDistributionCategoryModelResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/event-polarity':
+    post:
+      tags:
+        - Charts
+      summary: Get data to event polarity chart
+      description: This endpoint returns data to the event polarity chart
+      operationId: getEventPolarityChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetEventPolarityChartResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/repeated-events':
+    post:
+      tags:
+        - Charts
+      summary: Get repeated events
+      description: This endpoint returns repeated events
+      operationId: getRepeatedEvents
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/page_size'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetRepeatedEventsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/weekly-hourly-activity':
+    post:
+      tags:
+        - Charts
+      summary: Get data to weekly and hourly activity chart
+      description: This endpoint returns data to weekly and hourly activity chart
+      operationId: getWeeklyHourlyActivityChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetWeeklyHourlyActivityChartResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/model-importance-analysis':
+    post:
+      tags:
+        - Charts
+      summary: Get model importance analysis
+      description: This endpoint returns model importance analysis
+      operationId: getModelImportanceAnalysis
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetModelImportanceAnalysisResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/filters':
+    get:
+      tags:
+        - Filters
+      summary: Get options for filters available by client
+      description: This endpoint return all options for filters available by client
+      operationId: getFilters
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetFilterOptionsByClientResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/filters/network/{networkName}':
+    get:
+      tags:
+        - Filters
+      summary: Get options for filters available by social network
+      description: This endpoint return all options for filters available by client and social network
+      operationId: getFiltersByNetwork
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetFilterOptionsByClientResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/filters/event-map':
+    get:
+      tags:
+        - Filters
+      summary: Get the options for the available countries and locations for the event map chart
+      description: This endpoint return the options for the available countries and locations for the event map chart
+      operationId: getEventMapOptions
+      responses:
+        '200':
+          $ref: '#/components/responses/GetEventMapOptions'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/dates':
+    get:
+      tags:
+        - Filters
+      summary: Get dates front for filters available by client
+      description: This endpoint return all dates front for filters available by client
+      operationId: getFiltersDates
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetFilterDatesByClientResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/models':
+    post:
+      tags:
+        - Charts
+      summary: Get data to models chart
+      description: This endpoint returns data to models chart
+      operationId: getModelsChart
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetModelsChartResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/summary/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export summary chart data to excel
+      description: This endpoint returns summary chart data in excel format
+      operationId: getExportSummaryData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/TWITTER/event-map/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export event map chart data to excel
+      description: This endpoint returns event map chart data in excel format
+      operationId: getExportEventMapData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/locations'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/frequent-hashtags/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export frequent hashtags chart data to excel
+      description: This endpoint returns frequent hashtags chart data in excel format
+      operationId: getExportFrequentHashtagsData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/detailed-event-view/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export detailed event view chart data to excel
+      description: This endpoint returns detailed event view chart data in excel format
+      operationId: getExportDetailedEventViewData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/events-evolution/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export events evolution chart data to excel
+      description: This endpoint returns events evolution data in excel format
+      operationId: getExportEventsEvolutionData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+        - $ref: '#/components/parameters/typeEvents'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/participation/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export participation chart data to excel
+      description: This endpoint returns participation chart data in excel format
+      operationId: getExportParticipationData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+        - $ref: '#/components/parameters/typeEvents'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/events-distribution/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export events distribution chart data to excel
+      description: This endpoint returns events distribution chart data in excel format
+      operationId: getExportEventsDistributionData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+        - $ref: '#/components/parameters/typeEvents'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/event-polarity/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export event polarity chart data to excel
+      description: This endpoint returns event polarity chart data in excel format
+      operationId: getExportEventPolarityData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/heatmap/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export heatmap chart data to excel
+      description: This endpoint returns heatmap chart data in excel format
+      operationId: getExportHeatmapData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+        - $ref: '#/components/parameters/typeHeatMap'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/weekly-hourly-activity/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export weekly hourly activity chart data to excel
+      description: This endpoint returns  weekly hourly activity chart data in excel format
+      operationId: getExportWeeklyHourlyActivityData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/repeated-events/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export repeated events chart data to excel
+      description: This endpoint returns repeated events chart data in excel format
+      operationId: getExportRepeatedEventsData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/model-importance-analysis/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export model importance analysis chart data to excel
+      description: This endpoint returns model importance analysis chart data in excel format
+      operationId: getExportModelImportanceAnalysisData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/keywords/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export keyword chart data to excel
+      description: This endpoint returns keyword chart data in excel format
+      operationId: getExportKeywordData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/global-temporal-category-distribution/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export global temporal category distribution chart data to excel
+      description: This endpoint returns  global temporal category distribution chart data in excel format
+      operationId: getExportGlobalTemporalDistributionData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/bigrams/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export bigrams chart data to excel
+      description: This endpoint returns bigrams chart data in excel format
+      operationId: getExportBigramsData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/trigrams/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export trigrams chart data to excel
+      description: This endpoint returns trigrams chart data in excel format
+      operationId: getExportTrigramsData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/models/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export models chart data to excel
+      description: This endpoint returns models chart data in excel format
+      operationId: getExportModelsData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+        - $ref: '#/components/parameters/modelName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/temporal-distribution-category-model/download':
+    post:
+      tags:
+        - Exportables
+      summary: Export temporal distribution category chart data to excel
+      description: This endpoint returns temporal distribution category chart data in excel format
+      operationId: getExportTemporalDistributionCategoryModelData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+        - $ref: '#/components/parameters/modelType'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/authors-engagement/download':
+    post:
+      tags:
+        - Exportables
+      summary: Get data to authors engagement chart
+      description: This endpoint returns data for the authors engagement chart by selected filters.
+      operationId: getExportAuthorsEngagementData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/clients/{id}/networks/{networkName}/evolutionary-polarity/download':
+    post:
+      tags:
+        - Exportables
+      summary: Get data to evolutionary polarity chart
+      description: This endpoint returns data for the evolutionary polarity chart by selected filters.
+      operationId: getExportEvolutionaryPolarityData
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/networkName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiltersForCharts'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetExportableResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+servers:
+  - url: '{protocol}://{domain}{port}/{baseUrl}/{apiVersion}'
+    description: Default
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+      domain:
+        default: localhost
+      port:
+        default: ':8080'
+      baseUrl:
+        default: 'api'
+      apiVersion:
+        enum:
+          - 'v1'
+        default: 'v1'
+components:
+  responses:
+    GetEventEvolutionChartResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetEventEvolutionChartResponse'
+    GetModelsChartResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetModelsChartResponse'
+    GetFrequentHashtagsChartResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetFrequentHashtagsChartResponse'
+    GetEvolutionaryPolarityChartResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetEvolutionaryPolarityChartResponse'
+    GetHeatMapChartResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetHeatMapChartResponse'
+    GetBigramChartResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetBigramChartResponse'
+    GetKeywordsChartResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetKeywordsChartResponse'
+    GetTrigramChartResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetTrigramChartResponse'
+    GetParticipationChartResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetParticipationChartResponse'
+    GetAuthorsEngChartResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetAuthorsEngChartResponse'
+    GetEventsDistChartResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetEventsDistChartResponse'
+    GetFilterOptionsByClientResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetFilterOptionsByClientResponse'
+    GetEventMapOptions:
+      description: Successful get operation of the event map options
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetEventMapOptionsResponse'
+    GetFilterDatesByClientResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetFilterDatesByClientResponse'
+    GetSummaryResponse:
+      description: Authors and events quantity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetSummaryResponse'
+    GetDetailedEventViewResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetDetailedEventViewResponse'
+    GetEventsMapResponse:
+      description: Tweet events map
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetEventsMapResponse'
+    GetGlobalCategoryDistributionResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GlobalCategoryDistributionResponse'
+    GetTemporalDistributionCategoryModelResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetTemporalDistributionCategoryModelResponse'
+    GetEventPolarityChartResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetEventPolarityChartResponse'
+    GetRepeatedEventsResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetRepeatedEventsResponse'
+    GetWeeklyHourlyActivityChartResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetWeeklyHourlyActivityResponse'
+    GetModelImportanceAnalysisResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetModelImportanceAnalysisResponse'
+    GetExportableResponse:
+      description: Successfully generated Excel
+      content:
+        application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+          schema:
+            type: string
+            format: binary
+    StandardResponse:
+      description: Standard format for all API responses. The "data" property can be an array or an object.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StandardResponse'
+    BadRequestResponse:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ErrorResponse'
+              - type: object
+                properties:
+                  status:
+                    example: 400
+                  message:
+                    example: The date is invalid
+    UnauthorizedResponse:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ErrorResponse'
+              - type: object
+                properties:
+                  status:
+                    example: 401
+                  message:
+                    example: Invalid username or password
+    ForbiddenResponse:
+      description: You do not have permission to access this resource
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ErrorResponse'
+              - type: object
+                properties:
+                  status:
+                    example: 403
+                  message:
+                    example: You do not have permission to perform this action.
+    InternalErrorResponse:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ErrorResponse'
+              - type: object
+                properties:
+                  status:
+                    example: 500
+                  message:
+                    example: Internal server error
+    ExampleResponse:
+      description: Example response based on the standard format. The "data" property can be an array or an object. The "pagination" property may be absent.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/StandardResponse'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Example'
+  schemas:
+    FiltersForCharts:
+      required:
+        - startDate
+        - endDate
+      type: object
+      properties:
+        startTimeRange:
+          type: string
+          example: 13:00
+        endTimeRange:
+          type: string
+          example: 16:00
+        startDate:
+          type: string
+          example: '2024-04-01T00:00:00.000Z'
+        endDate:
+          type: string
+          example: '2024-04-15T23:59:59.999Z'
+        series:
+          type: array
+          example: [660308d88a8718273c37be69]
+        subseries:
+          type: array
+          example: [66169749624a30044243f14f, 66169780624a30044243f157]
+        polarity:
+          type: array
+          example: [POSITIVO, NEGATIVO, NEUTRO]
+        categories:
+          type: array
+          example: [661578f53959779c0fb752c6]
+        followers:
+          $ref: '#/components/schemas/Followers'
+        words:
+          type: array
+          items:
+            $ref: '#/components/schemas/Words'
+    Followers:
+      type: object
+      properties:
+        options:
+          $ref: '#/components/schemas/Comparison'
+        amount:
+          type: number
+          example: 1000
+    Words:
+      type: object
+      properties:
+        words:
+          type: array
+          example: [confianza, certidumbre, determinación]
+        fulfills:
+          type: boolean
+          example: false
+    Comparison:
+      type: string
+      enum:
+        - GREATER_EQUAL
+        - LESS_EQUAL
+    StandardResponse:
+      type: object
+      properties:
+        status:
+          type: number
+          example: 200
+        message:
+          type: string
+          example: 'Successful operation'
+        data:
+          anyOf:
+            - type: object
+            - type: array
+      required:
+        - status
+        - message
+        - data
+    StandardResponseList:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+        - type: object
+          properties:
+            pagination:
+              $ref: '#/components/schemas/Pagination'
+    GetEventEvolutionChartResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataListForEventEvolutionChart'
+    GetModelsChartResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DataForModelsChart'
+    GetFrequentHashtagsChartResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+        - type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataListForFrequentHashtagsChart'
+    GetEvolutionaryPolarityChartResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+        - type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DataListForEvolutionaryPolarityChart'
+    GetHeatMapChartResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataListForHeatMapChart'
+    GetBigramChartResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/DataListForBigramChart'
+    GetKeywordsChartResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/DataListForKeywordsChart'
+    GetTrigramChartResponse:
+      type: object
+      properties:
+        status:
+          type: number
+          example: 200
+        message:
+          type: string
+          example: null
+        data:
+          $ref: '#/components/schemas/DataListForTrigramChart'
+    GetParticipationChartResponse:
+      type: object
+      properties:
+        status:
+          type: number
+          example: 200
+        message:
+          type: string
+          example: null
+        data:
+          $ref: '#/components/schemas/DataListForParticipationChart'
+    GlobalCategoryDistributionResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/DataListForGlobalCategoryDistributionChart'
+    GetTemporalDistributionCategoryModelResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/DataListForTemporalDistributionCategoryModelChart'
+    GetAuthorsEngChartResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+      properties:
+        data:
+          $ref: '#/components/schemas/DataListForAuthorsEngChart'
+    GetEventsDistChartResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DataListForEventsDistChart'
+    GetEventMapOptionsResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/EventMapOptions'
+    EventMapOptions:
+      type: object
+      properties:
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'
+        countries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Country'
+    Location:
+      type: object
+      properties:
+        label:
+          type: string
+          example: Buenos Aires
+        value:
+          type: string
+          example: '5e8f8c29e91d19417434c7da'
+        countryCode:
+          type: string
+          example: AR
+    Country:
+      type: object
+      properties:
+        label:
+          type: string
+          example: Argentina
+        value:
+          type: string
+          example: AR
+    GetFilterOptionsByClientResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            example: Serie
+          options:
+            type: array
+            items:
+              type: object
+              properties:
+                label:
+                  type: string
+                  example: 'A'
+                value:
+                  type: string
+                  example: 'A'
+                subOptions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      label:
+                        type: string
+                        example: 'A'
+                      value:
+                        type: string
+                        example: 'A'
+    GetFilterDatesByClientResponse:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+          example: '2022-01-01T00:00:00.000Z'
+        endDate:
+          type: string
+          format: date-time
+          example: '2022-01-07T23:59:59.999Z'
+    DataForModelsChart:
+      type: object
+      properties:
+        basicEmotions:
+          type: object
+          properties:
+            topFiveCategories:
+              type: array
+              example:
+                [
+                  { category: ALEGRIA, percentage: 30 },
+                  { category: MIEDO, percentage: 25 },
+                  { category: IRA, percentage: 18 },
+                  { category: TRISTEZA, percentage: 12 },
+                  { category: RECHAZO, percentage: 10 },
+                ]
+            others:
+              type: array
+              example: [{ category: SORPRESA, percentage: 5 }]
+            totalPercentageOthers:
+              type: number
+              example: 5
+        concerns:
+          type: object
+          properties:
+            topFiveCategories:
+              type: array
+              example:
+                [
+                  { category: CORRUPCION, percentage: 40 },
+                  { category: EDUCACION, percentage: 20 },
+                  { category: SALUD, percentage: 11 },
+                  { category: SEGURIDAD, percentage: 10 },
+                  { category: TRABAJO, percentage: 7 },
+                ]
+            others:
+              type: array
+              example:
+                [
+                  { category: VIVIENDA, percentage: 6 },
+                  { category: AMBIENTE, percentage: 4 },
+                  { category: INFLACION, percentage: 2 },
+                ]
+            totalPercentageOthers:
+              type: number
+              example: 8
+        attributes:
+          type: object
+          properties:
+            topFiveCategories:
+              type: array
+              example:
+                [
+                  { category: CERCANÍA, percentage: 30 },
+                  { category: FALTA DE CERCANÍA, percentage: 25 },
+                  { category: SENSIBILIDAD, percentage: 18 },
+                  { category: FALTA DE SENSIBILIDAD, percentage: 12 },
+                  { category: COHERENCIA, percentage: 7 },
+                ]
+            others:
+              type: array
+              example: [{ category: INCOHERENCIA, percentage: 4 }, { category: AUTORIDAD, percentage: 4 }]
+            totalPercentageOthers:
+              type: number
+              example: 8
+        socialClimate:
+          type: object
+          properties:
+            topFiveCategories:
+              type: array
+              items:
+                example:
+                  [
+                    { category: IRRITACION, percentage: 30 },
+                    { category: JUSTICIA, percentage: 25 },
+                    { category: INJUSTICIA, percentage: 18 },
+                    { category: UNIDAD, percentage: 12 },
+                    { category: DIVISION, percentage: 10 },
+                  ]
+            others:
+              type: array
+              example:
+                [
+                  { category: CONTINUIDAD, percentage: 3 },
+                  { category: CAMBIO, percentage: 1 },
+                  { category: POLITIZACION, percentage: 1 },
+                ]
+            totalPercentageOthers:
+              type: number
+              example: 5
+        voterMotivationalNetwork:
+          type: object
+          properties:
+            topFiveCategories:
+              type: array
+              example:
+                [
+                  { category: VOTO RACIONAL, percentage: 30 },
+                  { category: VOTO PARTIDARIO, percentage: 25 },
+                  { category: VOTO POR CARÍSMA, percentage: 18 },
+                  { category: VOTO DE IRA, percentage: 17 },
+                  { category: VOTO COLECTIVO, percentage: 10 },
+                ]
+            others:
+              type: array
+              example: []
+            totalPercentageOthers:
+              type: number
+              example: 0
+        feelings:
+          type: object
+          properties:
+            topFiveCategories:
+              type: array
+              example:
+                [
+                  { category: AMOR, percentage: 30 },
+                  { category: CULPA, percentage: 25 },
+                  { category: ORGULLO, percentage: 18 },
+                  { category: SUMISION, percentage: 12 },
+                  { category: CURIOSIDAD, percentage: 10 },
+                ]
+            others:
+              type: array
+              example:
+                [
+                  { category: CONVICCION, percentage: 5 },
+                  { category: SUSTO, percentage: 1 },
+                  { category: DESESPERACION, percentage: 1 },
+                ]
+            totalPercentageOthers:
+              type: number
+              example: 7
+    DataListForEventEvolutionChart:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '507f191e810c19729de860ea'
+        name:
+          type: string
+          example: 'Arg - Javier Milei'
+        type:
+          type: string
+          example: 'serie'
+        parentSerieId:
+          type: string
+          example: null
+        parentSerieName:
+          type: string
+          example: 'ARG - MILEI - TW'
+        eventsGroups:
+          type: array
+          items:
+            type: object
+            properties:
+              totalEvents:
+                type: integer
+                example: 6
+              positiveEvents:
+                type: number
+                example: 60
+              totalAuthors:
+                type: integer
+                example: 4
+              categories:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    attributes:
+                      type: object
+                      additionalProperties:
+                        type: integer
+                  example:
+                    Atributos:
+                      AUTORIDAD: 50
+              mostFrequentHashtags:
+                type: array
+                items:
+                  type: string
+                example: ['peluca', 'dolarización', 'arg']
+              mostMentionedAccounts:
+                type: array
+                items:
+                  type: string
+                example: ['madorni', 'TraductorTeAma', 'QuijoteMancha']
+              eventGroupDate:
+                type: string
+                format: date-time
+                example: '2022-01-01T00:00:00.000Z'
+    DataListForFrequentHashtagsChart:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'VLLC'
+        totalOccurrences:
+          type: integer
+          example: 5000
+    DataListForEvolutionaryPolarityChart:
+      type: array
+      items:
+        type: object
+        properties:
+          eventGroupDate:
+            type: string
+            example: '2022-01-01'
+          neutralPercent:
+            type: number
+            example: 25
+          positivePercent:
+            type: number
+            example: 50
+          negativePercent:
+            type: number
+            example: 30
+    DataListForHeatMapChart:
+      type: object
+      properties:
+        dayOfWeek:
+          type: string
+          example: 'Lunes'
+        hourOfDay:
+          type: string
+          example: '14'
+        totalEvents:
+          type: integer
+          example: 4000
+        majorityPolarity:
+          type: string
+          example: 'POS'
+        positivePolarityPercentage:
+          type: number
+          example: 50
+        negativePolarityPercentage:
+          type: number
+          example: 25
+        neutralPolarityPercentage:
+          type: number
+          example: 25
+    DataListForBigramChart:
+      type: array
+      items:
+        type: object
+        properties:
+          word:
+            type: string
+            example: Trabajo-Voto
+          count:
+            type: number
+            example: 20
+    DataListForKeywordsChart:
+      type: array
+      items:
+        type: object
+        properties:
+          word:
+            type: string
+            example: Argentina
+          count:
+            type: number
+            example: 10
+    DataListForTrigramChart:
+      type: array
+      items:
+        type: object
+        properties:
+          word:
+            type: string
+            example: Argentina
+          count:
+            type: number
+            example: 20
+    DataListForParticipationChart:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: '507f191e810c19729de860ea'
+          parentSerieId:
+            type: string
+            example: null
+          type:
+            type: string
+            example: 'serie'
+          name:
+            type: string
+            example: 'Javier Milei'
+          eventsGroups:
+            type: array
+            items:
+              type: object
+              properties:
+                eventGroupDate:
+                  type: string
+                  example: '2022-01-01T00:00:00.000Z'
+                totalAuthors:
+                  type: integer
+                  example: 45
+                totalEvents:
+                  type: integer
+                  example: 13000
+    DataListForAuthorsEngChart:
+      type: array
+      items:
+        type: object
+        properties:
+          authorId:
+            type: string
+            example: '1767346946782511104'
+          username:
+            type: string
+            example: 'MundoELaMontana'
+          totalEngagement:
+            type: number
+            example: 5000
+    DataListForEventsDistChart:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: '5e8f8c29e91d19417434c7da'
+          name:
+            type: string
+            example: 'Javier Milei'
+          totalEvents:
+            type: integer
+            example: 750
+          percentEvents:
+            type: number
+            example: 75
+    GetSummaryResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                authors:
+                  type: integer
+                  example: 1000
+                events:
+                  type: integer
+                  example: 10000
+    GetDetailedEventViewResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponseList'
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/DetailedEventView'
+    DetailedEventView:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '661ebae913bb838ad829cf35'
+        author:
+          $ref: '#/components/schemas/Author'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        contentImgs:
+          type: array
+          items:
+            type: string
+            example: 'https://pbs.twimg.com/media/GIy5AmqWgAAsNPd.jpg'
+        contentLinks:
+          type: array
+          items:
+            type: string
+            example: https://pbs.twimg.com/media/GK0hNx-W0AA6crG?format=jpg&name=360x360
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        date:
+          type: string
+          format: date-time
+          example: '2024-04-10T17:32:56.000+00:00'
+        engagement:
+          type: number
+          example: 40
+        link:
+          type: string
+          example: 'https://twitter.com/ManuelFalcnHer2/status/1778113953161155054'
+        stats:
+          $ref: '#/components/schemas/Stats'
+        polarity:
+          type: string
+          example: 'POS'
+        content:
+          type: string
+          example: 'Hace 63 años, con el impulso de la Federación de Mujeres Cubanas, nacieron los círculos infantiles en #Cuba.'
+        socialNetwork:
+          $ref: '#/components/schemas/SocialNetwork'
+    GetRepeatedEventsResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponseList'
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/RepeatedEvents'
+    RepeatedEvents:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '661ebae913bb838ad829cf35'
+        author:
+          $ref: '#/components/schemas/Author'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        contentImgs:
+          type: array
+          items:
+            type: string
+            example: 'https://pbs.twimg.com/media/GIy5AmqWgAAsNPd.jpg'
+        contentLinks:
+          type: array
+          items:
+            type: string
+            example: https://pbs.twimg.com/media/GK0hNx-W0AA6crG?format=jpg&name=360x360
+        date:
+          type: string
+          format: date-time
+          example: '2024-04-10T17:32:56.000+00:00'
+        engagement:
+          type: number
+          example: 40
+        link:
+          type: string
+          example: 'https://twitter.com/ManuelFalcnHer2/status/1778113953161155054'
+        stats:
+          $ref: '#/components/schemas/Stats'
+        polarity:
+          type: string
+          example: 'POS'
+        content:
+          type: string
+          example: 'Hace 63 años, con el impulso de la Federación de Mujeres Cubanas, nacieron los círculos infantiles en #Cuba.'
+        socialNetwork:
+          $ref: '#/components/schemas/SocialNetwork'
+        repetitions:
+          type: number
+          example: 3
+    Author:
+      type: object
+      properties:
+        fullName:
+          type: string
+          example: Manuel Falcón Hernández
+        profileImage:
+          type: string
+          example: https://pbs.twimg.com/profile_images/1644338870794821639/xQx2_l5I_normal.jpg
+        username:
+          type: string
+          example: 'user-mock'
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '123'
+        text:
+          type: string
+          example: 'comment mock.'
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '66157eaf3959779c0fb752d1'
+        name:
+          type: string
+          example: 'ALEGRÍA'
+    Stats:
+      type: object
+      properties:
+        comments:
+          type: integer
+          example: 10
+        likes:
+          type: integer
+          example: 1000
+        quotes:
+          type: integer
+          example: 100
+        retweets:
+          type: integer
+          example: 100
+        views:
+          type: integer
+          example: 1050
+    SocialNetwork:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'TWITTER'
+        logo:
+          type: string
+          example: 'https://img.freepik.com/vector-gratis/twitter-nuevo-logotipo-2023-x-vector-fondo-blanco_1017-45422.jpg?t=st=1714419954~exp=1714423554~hmac=5a21d11e5161c3418a8099ae319379b9ddfe1c8122822f55b0af51184d841d27&w=826'
+    GetEventsMapResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/EventsMapData'
+    GetWeeklyHourlyActivityResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+        - type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/WeeklyActivityChartData'
+    EventsMapData:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: 772ebae913ee838ac829cf30
+          author:
+            type: object
+            properties:
+              fullName:
+                type: string
+                example: Nombre Completo
+              username:
+                type: string
+                example: nombredeusuario
+              profileImage:
+                type: string
+                example: https://pbs.twimg.com/profile_images/1731485920910242816/profileImage.jpg
+          date:
+            type: string
+            example: '2024-01-01T00:00:00.000Z'
+          content:
+            type: string
+            example: Contenido del tweet
+          contentLinks:
+            type: array
+            items:
+              type: string
+              example: https://pbs.twimg.com/media/GK0hNx-W0AA6crG?format=jpg&name=360x360
+          link:
+            type: string
+            example: https://twitter.com/nombredeusuario/status/1778113953161155054
+          event_location:
+            type: object
+            properties:
+              latitude:
+                type: number
+                example: 0.31231
+              longitude:
+                type: number
+                example: 1.12321
+              state:
+                type: string
+                example: Buenos Aires
+          engagement:
+            type: number
+            example: 5
+          stats:
+            type: object
+            properties:
+              comments:
+                type: number
+                example: 1
+              retweets:
+                type: number
+                example: 1
+              quotes:
+                type: number
+                example: 1
+              likes:
+                type: number
+                example: 1
+              views:
+                type: number
+                example: 1
+          polarity:
+            type: string
+            example: POS
+          categories:
+            type: array
+            items:
+              type: string
+              example: ALEGRIA
+    DataListForGlobalCategoryDistributionChart:
+      type: array
+      items:
+        type: object
+        properties:
+          eventGroupDate:
+            type: string
+            format: date-time
+            example: '2024-04-01T00:00:00.000Z'
+          eventGroupDateEnd:
+            type: string
+            format: date-time
+            example: '2024-04-05T00:00:00.000Z'
+          groupCriteria:
+            type: string
+            example: 1w
+          categories:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: MIEDO
+                count:
+                  type: number
+                  example: 60
+                date:
+                  type: string
+                  format: date-time
+                  example: '2024-04-01T00:00:00.000Z'
+                avg:
+                  type: number
+                  example: 40
+    GetEventPolarityChartResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  totalEvents:
+                    type: number
+                    example: 250
+                  polarity:
+                    type: string
+                    example: POS
+                  percentage:
+                    type: number
+                    example: 25
+    DataListForTemporalDistributionCategoryModelChart:
+      type: array
+      items:
+        type: object
+        properties:
+          eventGroupDate:
+            type: string
+            example: '2024-05-01T00:00:00.000Z'
+          eventGroupDateEnd:
+            type: string
+            format: date-time
+            example: '2024-05-05T00:00:00.000Z'
+          groupCriteria:
+            type: string
+            example: 1h
+          categories:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Attributes
+                count:
+                  type: number
+                  example: 30
+                date:
+                  type: string
+                  format: date-time
+                  example: '2024-04-01T00:00:00.000Z'
+                avg:
+                  type: number
+                  example: 40
+    WeeklyActivityChartData:
+      type: object
+      properties:
+        dayOfWeek:
+          type: string
+          example: 'Lunes'
+        hourOfDay:
+          type: string
+          example: 14:00
+        averageEvents:
+          type: integer
+          example: 5000
+    GetModelImportanceAnalysisResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  model:
+                    type: string
+                    example: 'Serie 1'
+                  categories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        category:
+                          type: string
+                          example: 'Category 1'
+                        quantity:
+                          type: number
+                          example: 2500
+                        percentage:
+                          type: number
+                          example: 25
+    ErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorItem'
+        status:
+          type: number
+          example: 500
+        message:
+          type: string
+          example: Internal server error
+    ErrorItem:
+      type: object
+      properties:
+        key:
+          type: string
+          example: error.message.key
+        message:
+          type: string
+          example: Error message example. Same as the outer 'message' property.
+    Pagination:
+      type: object
+      properties:
+        count:
+          type: number
+          example: 1
+        page:
+          type: number
+          example: 1
+        page_size:
+          type: number
+          example: 10
+    Example:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+          name:
+            type: string
+            example: John Doe
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+  parameters:
+    networkName:
+      name: networkName
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+          - TWITTER
+          - INSTAGRAM
+          - FACEBOOK
+          - TIKTOK
+    modelName:
+      name: modelName
+      in: query
+      required: true
+      schema:
+        type: string
+        enum:
+          - basicEmotions
+          - concerns
+          - attributes
+          - socialClimate
+          - voterMotivationalNetwork
+          - feelings
+    clientId:
+      name: clientId
+      in: path
+      required: true
+      schema:
+        type: string
+    typeEvents:
+      in: query
+      name: typeEvents
+      required: true
+      schema:
+        type: string
+        enum:
+          - series
+          - subseries
+    modelType:
+      in: query
+      name: modelType
+      required: true
+      schema:
+        type: string
+        enum:
+          - basicEmotions
+          - concerns
+          - attributes
+          - socialClimate
+          - voterMotivationalNetwork
+          - feelings
+    typeHeatMap:
+      in: query
+      name: typeHeatMap
+      required: true
+      schema:
+        type: string
+        enum:
+          - relative
+          - absolute
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    page:
+      name: page
+      in: query
+      description: Page number
+      schema:
+        type: number
+        default: 1
+        minimum: 1
+    page_size:
+      name: page_size
+      in: query
+      description: Limit the number of results
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        default: 10
+    sort:
+      name: sort
+      in: query
+      description: Attribute to sort by
+      schema:
+        type: string
+        example: name
+    sort_dir:
+      name: sort_dir
+      in: query
+      description: Sorting direction
+      schema:
+        type: string
+        enum:
+          - ASC
+          - DESC
+    typeSort:
+      name: typeSort
+      in: query
+      description: sorting by date or engagement
+      schema:
+        type: string
+        enum:
+          - engagement
+          - date
+    locations:
+      name: locations
+      in: query
+      description: Array of location ids for events map chart
+      schema:
+        type: array
+        items:
+          type: string
+          example: 6626689ab5abdc3bad66b13a
