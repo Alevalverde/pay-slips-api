@@ -1,7 +1,6 @@
+import compression from 'compression';
 import express, { Express, Router } from 'express';
 import http from 'http';
-import { logger } from 'qsocialnow-common';
-import compression from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
 import swaggerUi from 'swagger-ui-express';
@@ -11,6 +10,7 @@ import { errorLogger, logger as loggerMiddleware } from 'express-winston';
 import util from 'util';
 import process from 'process';
 import config from '@/config';
+import { logger } from '@/utils';
 
 interface NodeServer {
   /**

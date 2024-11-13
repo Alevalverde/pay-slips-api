@@ -18,7 +18,7 @@
     "debug": "nodemon -e ts,tsx --exec node -r ts-node/register -r tsconfig-paths/register --inspect src/index.ts",
     "prettier:code-check": "prettier --check --no-error-on-unmatched-pattern --ignore-unknown ./**/*",
     "prettier:fix": "prettier --write --no-error-on-unmatched-pattern --ignore-unknown ./**/*"
-   },
+  },
   "repository": {
     "type": "git"
   },
@@ -29,6 +29,7 @@
     "npm": ">10.0.0"
   },
   "dependencies": {
+    "compression": "^1.7.5",
     "cors": "^2.8.5",
     "date-fns": "^3.6.0",
     "date-fns-tz": "^3.1.3",
