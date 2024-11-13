@@ -1,18 +1,6 @@
-import { FilterService } from 'qsocialnow-common';
-import {
-  clientRepository,
-  eventModelRepository,
-  locationRepository,
-  serieRepository,
-  countryRepository,
-} from '@/repositories';
+import { paySlipRepository } from '@/repositories';
+import PaySlipService from './pay-slip.service';
 
-const filterService = new FilterService(
-  clientRepository,
-  serieRepository,
-  eventModelRepository,
-  locationRepository,
-  countryRepository
-);
+const paySlipService = new PaySlipService(paySlipRepository);
 
-export { filterService };
+export { paySlipService };
