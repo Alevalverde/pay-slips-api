@@ -1,8 +1,7 @@
-import ChartController from './chart.controller';
-import { filterService } from '../services';
-import FilterController from './filter.controller';
+import { paySlipService } from "@/services";
+import PaySlipController from "./filter.controller";
 
-const chartController = new ChartController(filterService);
-const filterController = new FilterController(filterService);
 
-export { chartController, filterController };
+const paySlipController = new PaySlipController(paySlipService);
+
+export { paySlipController };
