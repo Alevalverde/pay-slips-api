@@ -3,6 +3,6 @@ import { paySlipController } from '../controllers';
 
 const router = Router();
 
-router.get('/paySlip/:paySlipDate', paySlipController.getPaySlip);
+router.post('/paySlip/upload', paySlipController.uploadPaySlip);
 
 export default router;

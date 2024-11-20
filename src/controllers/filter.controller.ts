@@ -5,9 +5,9 @@ import PaySlipService from '@/services/pay-slip.service';
 class PaySlipController {
   constructor(private readonly paySlipService: PaySlipService) {}
 
-  getPaySlip = async (req: Request, res: Response, next: NextFunction) => {
+  uploadPaySlip = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const paySlips = await this.paySlipService.getPaySlips();
+      const paySlips = await this.paySlipService.uploadPaySlip();
       return res.json(prepareResponse(200, null, paySlips));
     } catch (error) {
       next(error);
