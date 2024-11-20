@@ -4,7 +4,7 @@ import { logger } from '@/utils';
 class PaySlipService {
   constructor(private readonly paySlipRepository: PaySlipRepository) {}
 
-  async getPaySlips() {
+  async uploadPaySlip() {
     try {
       return [];
     } catch (error) {
