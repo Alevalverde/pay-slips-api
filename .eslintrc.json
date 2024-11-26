@@ -18,10 +18,10 @@
   },
   "plugins": ["@typescript-eslint", "import"],
   "rules": {
+    "import/no-extraneous-dependencies": "off",
     "@typescript-eslint/ban-types": "off",
     "no-nested-ternary": "off",
     "prefer-const": "off",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "import/extensions": [0],
     "no-use-before-define": [0],
     "import/no-unresolved": [0],
