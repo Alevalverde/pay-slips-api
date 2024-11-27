@@ -21,6 +21,4 @@ export default {
   DIR_ERRORS: './src/config/errors/error.yml',
   BASE_DOMAIN: process.env.BASE_DOMAIN,
   MONGO_URL: process.env.MONGO_URL || '',
-  PRODUCT_CODE: process.env.PRODUCT_CODE || 'appsocial',
-  PRODUCT_API_HOSTNAME: process.env.PRODUCT_API_HOSTNAME || '',
 };
