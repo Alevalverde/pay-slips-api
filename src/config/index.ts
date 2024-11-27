@@ -20,10 +20,5 @@ export default {
   DIR_SWAGGER: './src/config/docs/swagger.yml',
   DIR_ERRORS: './src/config/errors/error.yml',
   BASE_DOMAIN: process.env.BASE_DOMAIN,
-  APP_SOCIAL_DB_URL: process.env.APP_SOCIAL_DB_URL || '',
-  ETL_DB_URL: process.env.ETL_DB_URL || '',
-  SECURITY_API_HOSTNAME: process.env.SECURITY_API_HOSTNAME || 'http://localhost:8080/api/v1',
-  USER_VALIDATION_PATHNAME: process.env.USER_VALIDATION_PATHNAME || '/current-user',
-  PRODUCT_CODE: process.env.PRODUCT_CODE || 'appsocial',
-  PRODUCT_API_HOSTNAME: process.env.PRODUCT_API_HOSTNAME || '',
+  MONGO_URL: process.env.MONGO_URL || '',
 };
