@@ -19,9 +19,6 @@ export default {
   DOCS_ENDPOINT: '/api-docs',
   DIR_SWAGGER: './src/config/docs/swagger.yml',
   DIR_ERRORS: './src/config/errors/error.yml',
-  BASE_DOMAIN: process.env.BASE_DOMAIN ?? '',
-  MONGO_URL: process.env.MONGO_URL ?? '',
-  MAX_FILE_SIZE_BYTES: process.env.MAX_FILE_SIZE_BYTES ?? '',
-  GOOGLE_DRIVE_FOLDER_ID: process.env.GOOGLE_DRIVE_FOLDER_ID ?? '',
-  GOOGLE_CREDENTIAL: process.env.GOOGLE_CREDENTIAL ?? '',
+  BASE_DOMAIN: process.env.BASE_DOMAIN,
+  MONGO_URL: process.env.MONGO_URL || '',
 };
