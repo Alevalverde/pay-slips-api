@@ -1,5 +1,6 @@
-import { paySlipService } from '@/services';
-import PaySlipController from './pay-slip.controller';
+import { paySlipService } from "@/services";
+import PaySlipController from "./filter.controller";
+
 
 const paySlipController = new PaySlipController(paySlipService);
 

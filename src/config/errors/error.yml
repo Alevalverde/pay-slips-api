@@ -22,30 +22,36 @@ general:
       message: El ítem no existe.
       message_eng: This item does not exist.
       status: 404
-pay_slip:
-  not_exist:
-    key: pay_slip.not_exist
-    message: El bono de sueldo solicitado no existe.
-    message_eng: This pay slip does not exist.
-    status: 404
-  invalid_url:
-    key: pay_slip.invalid_url
-    message: La URL del bono de sueldo es inválida.
-    message_eng: The pay slip URL is not valid.
-    status: 400
-document_upload:
-  invalid_document_type:
-    key: document_upload.invalid_document_type
-    message: El tipo de documento no es válido.
-    message_eng: Document types not valid.
-    status: 400
-  invalid_document_size:
-    key: document_upload.invalid_document_size
-    message: El tamaño del documento es mayor al permitido.
-    message_eng: Document size exceeds the maximum allowed.
-    status: 400
-  invalid:
-    key: document_upload.invalid
-    message: No hay archivos para subir.
-    message_eng: No files were uploaded.
-    status: 400
+filter:
+  clients:
+    not_found:
+      key: filter.clients.not_found
+      message: El cliente no fue encontrado en el sistema.
+      message_eng: The user was not found in the system.
+      status: 404
+    series:
+      not_found:
+        key: filter.clients.series.not_found
+        message: El cliente no cuenta con series.
+        message_eng: The user does not have series.
+        status: 404
+clients:
+  series:
+    not_associated:
+      key: clients.series.not_associated
+      message: El cliente no tiene series asignadas para esta red social.
+      message_eng: The client has no series assigned to this social network.
+      status: 404
+type_events:
+  series:
+    not_found:
+      key: type_events.series.not_found
+      message: La serie seleccionada no se encuentra en el sistema.
+      message_eng: The selected series is not found in the system.
+      status: 404
+  subseries:
+    not_found:
+      key: type_events.subseries.not_found
+      message: La subserie seleccionada no se encuentra en el sistema.
+      message_eng: The selected subseries is not found in the system.
+      status: 404
