@@ -157,6 +157,9 @@ public/content/attachments/projects/*
 public/tmp/*
 email-templates/*
 .DS_Store
+.env
+credential-google-drive.json
 
 ### Script
 dev.sh
+
