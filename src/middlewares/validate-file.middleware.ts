@@ -17,7 +17,7 @@ export function validateFile(req: Request, res: Response, next: NextFunction) {
       return next(errors.document_upload.invalid_document_type);
     }
     // 10 mb as default value
-    const maxFileSize = parseInt(config.MAX_FILE_SIZE_BYTES || '10485760', 10);
+    const maxFileSize = parseInt(config.MAX_FILE_SIZE_BYTES, 10);
     if (size > maxFileSize) {
       return next(errors.document_upload.invalid_document_size);
     }

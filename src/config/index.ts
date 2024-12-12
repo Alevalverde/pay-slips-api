@@ -21,7 +21,7 @@ export default {
   DIR_ERRORS: './src/config/errors/error.yml',
   BASE_DOMAIN: process.env.BASE_DOMAIN ?? '',
   MONGO_URL: process.env.MONGO_URL ?? '',
-  MAX_FILE_SIZE_BYTES: process.env.MAX_FILE_SIZE_BYTES ?? '',
+  MAX_FILE_SIZE_BYTES: process.env.MAX_FILE_SIZE_BYTES ?? '10485760',
   GOOGLE_DRIVE_FOLDER_ID: process.env.GOOGLE_DRIVE_FOLDER_ID ?? '',
   GOOGLE_CREDENTIAL: process.env.GOOGLE_CREDENTIAL ?? '',
 };

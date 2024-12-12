@@ -19,9 +19,9 @@ class PaySlipController {
 
   uploadPaySlip = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const files = req.files as Express.Multer.File[];
+      const file = req.files as Express.Multer.File[];
       const { nameFile } = req.body;
-      await this.paySlipService.uploadPaySlip(files, nameFile);
+      await this.paySlipService.uploadPaySlip(file[0], nameFile);
       return res.json(prepareResponse(200, null));
     } catch (error) {
       next(error);

@@ -1,5 +1,5 @@
 import { Model, Connection, Types } from 'mongoose';
-import { PaySlipModel, PaySlipSchema } from '@/models';
+import { PaySlip, PaySlipModel, PaySlipSchema } from '@/models';
 
 class PaySlipRepository {
   private model: Model<PaySlipModel>;
@@ -10,6 +10,10 @@ class PaySlipRepository {
 
   async getPaySlip(id: Types.ObjectId) {
     return this.model.findById(id);
+  }
+
+  async uploadPaySlip(payslipDetails: PaySlip) {
+    return this.model.create(payslipDetails);
   }
 }
 
