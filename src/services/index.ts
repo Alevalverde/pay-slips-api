@@ -1,10 +1,8 @@
-import { paySlipRepository } from '@/repositories';
+import { paySlipRepository, userRepository } from '@/repositories';
 import PaySlipService from './pay-slip.service';
 import GoogleDriveService from './google-drive.service';
-import PaySlipProcessor from './pay-slip-processor';
 
-const paySlipService = new PaySlipService(paySlipRepository);
-const paySlipProcessor = new PaySlipProcessor();
 const googleDriveService = new GoogleDriveService();
+const paySlipService = new PaySlipService(paySlipRepository, googleDriveService, userRepository);
 
-export { paySlipService, paySlipProcessor, googleDriveService };
+export { paySlipService, googleDriveService };

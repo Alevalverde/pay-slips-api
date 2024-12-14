@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { prepareResponse } from '@/utils/api-response';
 import PaySlipService from '@/services/pay-slip.service';
+import { FilePayload } from '@/models/interface';
 
 class PaySlipController {
   constructor(private readonly paySlipService: PaySlipService) {}
@@ -20,8 +21,13 @@ class PaySlipController {
   uploadPaySlip = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const file = req.files as Express.Multer.File[];
-      const { nameFile } = req.body;
-      await this.paySlipService.uploadPaySlip(file[0], nameFile);
+      const { nameFile, month, year } = req.body;
+      const filePayload: FilePayload = {
+        nameFile,
+        month,
+        year,
+      };
+      await this.paySlipService.uploadPaySlip(file[0], filePayload);
       return res.json(prepareResponse(200, null));
     } catch (error) {
       next(error);

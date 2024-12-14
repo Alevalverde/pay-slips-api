@@ -199,7 +199,13 @@ components:
           format: binary
         nameFile:
           type: string
-          example: 'Bonos de sueldo - SEPT 2024'
+          example: 'BS'
+        month:
+          type: string
+          example: 'ABR'
+        year:
+          type: string
+          example: '2024'
     ErrorResponse:
       type: object
       properties:
