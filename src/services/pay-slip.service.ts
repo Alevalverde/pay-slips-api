@@ -64,6 +64,7 @@ class PaySlipService {
       const folderId = await this.googleDriveService.createFolderInGoogleDrive(folderName);
       const pdfBuffer = file.buffer;
       const pdfDetailsArray = await parsePDFDetailsWithBuffers(pdfBuffer);
+      const pdfRejected = [];
 
       pdfDetailsArray.forEach(async (payslip) => {
         const pdfName = `${folderName} - ${payslip.name}`;
@@ -71,7 +72,7 @@ class PaySlipService {
 
         const { cuil, name } = payslip;
         if (!cuil || !name) {
-          console.log(payslip);
+          pdfRejected.push(payslip);
           return;
         }
         const userId = await this.userRepository.getOrUpdateUser(cuil, name);
