@@ -12,7 +12,27 @@ paths:
   '/pay-slips/{id}':
     get:
       tags:
-        - Pay Slip
+        - Pay Slips
+      summary: Get pay slip by id
+      description: This endpoint returns data to the pay slip
+      operationId: getPaySlip
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/DownloadPaySlipResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/users/{id}':
+    get:
+      tags:
+        - Users
       summary: Get pay slip by id
       description: This endpoint returns data to the pay slip
       operationId: getPaySlip
@@ -32,7 +52,7 @@ paths:
   '/pay-slips/upload':
     post:
       tags:
-        - Pay Slip
+        - Pay Slips
       summary: Upload PDF file.
       requestBody:
         content:
