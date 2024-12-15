@@ -1,7 +1,7 @@
 export interface PdfDetails {
   page: number;
-  name: string;
-  cuil: string;
+  name: string | null;
+  cuil: string | null;
   buffer: Buffer;
 }
 

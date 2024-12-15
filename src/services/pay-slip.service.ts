@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Types } from 'mongoose';
+import { ObjectId, Types } from 'mongoose';
 import { Response } from 'express';
 import { logger, parsePDFDetailsWithBuffers } from '@/utils';
 import errors from '@/config/errors';
@@ -43,6 +43,20 @@ class PaySlipService {
     }
   }
 
+  /**
+   * Uploads a payslip PDF to Google Drive and saves its details in the database.
+   *
+   * This function performs the following steps:
+   * 1. Creates a folder in Google Drive using the provided file payload details.
+   * 2. Parses the uploaded PDF file to extract individual pages.
+   * 3. For each extracted page, uploads it as a separate PDF to Google Drive.
+   * 4. Retrieves or updates the user information based on extracted CUIL and name.
+   * 5. Saves the payslip details, including the uploaded PDF URL, to the database.
+   *
+   * @param file - The uploaded PDF file containing payslips.
+   * @param filePayload - An object containing the file name, month, and year for the payslip.
+   * @throws Will log an error and rethrow if any step of the process fails.
+   */
   async uploadPaySlip(file: Express.Multer.File, filePayload: FilePayload) {
     const { nameFile, month, year } = filePayload;
     const folderName = `${nameFile} - ${month} ${year}`;
@@ -56,15 +70,18 @@ class PaySlipService {
         const urlPdf = await this.googleDriveService.uploadFileToGoogleDrive(payslip.buffer, pdfName, folderId!);
 
         const { cuil, name } = payslip;
+        if (!cuil || !name) {
+          console.log(payslip);
+          return;
+        }
         const userId = await this.userRepository.getOrUpdateUser(cuil, name);
-        console.log({ userId });
 
         const payslipDetails: PaySlip = {
           month,
           year,
           url: urlPdf,
           name: pdfName,
-          user: userId as any,
+          user: userId._id as ObjectId,
         };
         await this.paySlipRepository.uploadPaySlip(payslipDetails);
       });

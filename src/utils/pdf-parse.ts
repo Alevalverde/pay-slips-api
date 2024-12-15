@@ -25,11 +25,11 @@ export async function parsePDFDetailsWithBuffers(pdfBuffer: Buffer) {
 
     // Buscar el CUIL en el texto
     const cuilMatch = pageText.match(/CUIL:\s?(\d{2}-\d{8}-\d)/);
-    const cuil = cuilMatch && cuilMatch[1] ? cuilMatch[1] : 'No encontrado';
+    const cuil = cuilMatch && cuilMatch[1] ? cuilMatch[1] : null;
 
     // Dividir el texto en líneas y obtener "name" (línea 6)
     const lines = pageText.split('\n');
-    const name = lines[6] ? formatName(lines[6]) : 'No encontrado';
+    const name = lines[6] ? formatName(lines[6]) : null;
 
     // Agregar los datos al array incluyendo el buffer de la página
     pdfDetailsArray.push({ page: i + 1, name, cuil, buffer: singlePageBuffer });

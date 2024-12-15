@@ -8,12 +8,19 @@ class UserRepository {
     this.model = this.connection.model<UserModel>('UserModel', UserSchema, 'users');
   }
 
+  /**
+   * Finds a user by their CUIL and updates their name if they exist.
+   * If the user does not exist, a new user is created with the provided CUIL and name.
+   * @param cuil - The CUIL of the user.
+   * @param name - The name of the user.
+   * @returns A promise that resolves to the updated or newly created user document.
+   */
   async getOrUpdateUser(cuil: string, name: string) {
     return this.model
       .findOneAndUpdate(
-        { cuil }, // Search by cuil
-        { $setOnInsert: { cuil, name } }, // Insert if not found
-        { new: true, upsert: true } //
+        { cuil }, 
+        { $setOnInsert: { cuil, name } }, 
+        { new: true, upsert: true } 
       )
       .lean();
   }
