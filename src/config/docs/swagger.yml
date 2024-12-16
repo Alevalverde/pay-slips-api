@@ -33,14 +33,14 @@ paths:
     get:
       tags:
         - Users
-      summary: Get pay slip by id
-      description: This endpoint returns data to the pay slip
-      operationId: getPaySlip
+      summary: Get the list of users or each user by id.
+      description: This endpoint returns a list of users or each user by id
+      operationId: getUsers
       parameters:
         - $ref: '#/components/parameters/id'
       responses:
         '200':
-          $ref: '#/components/responses/DownloadPaySlipResponse'
+          $ref: '#/components/responses/GetUsersResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse'
         '401':
@@ -125,6 +125,26 @@ components:
           schema:
             type: string
             example: attachment; filename="Bonos de sueldo - SEPT 2024.pdf"
+    GetUsersResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/StandardResponse'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Users'
+                  message:
+                    type: string
+                    example: null
+                    nullable: true
+                  pagination:
+                    example: null
+                    nullable: true
     BadRequestResponse:
       description: Internal server error
       content:
@@ -200,6 +220,10 @@ components:
         message:
           type: string
           example: 'Successful operation'
+        data:
+          anyOf:
+            - type: object
+            - type: array
       required:
         - status
         - message
@@ -211,6 +235,15 @@ components:
           properties:
             pagination:
               $ref: '#/components/schemas/Pagination'
+    Users:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        cuil:
+          type: string
     UploadFiles:
       type: object
       properties:
