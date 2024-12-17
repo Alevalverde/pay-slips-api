@@ -1,4 +1,4 @@
-import { ApiResponse, ApiError, PaginationInfo } from '@/models/interface';
+import { ApiResponse, ApiError, PaginationInfo } from '@/interface';
 
 export function prepareResponse<T>(
   status: number,

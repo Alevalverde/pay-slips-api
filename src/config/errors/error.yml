@@ -49,3 +49,9 @@ document_upload:
     message: No hay archivos para subir.
     message_eng: No files were uploaded.
     status: 400
+user:
+  not_found:
+    key: user.not_found
+    message: El usuario no existe.
+    message_eng: User not found.
+    status: 404
