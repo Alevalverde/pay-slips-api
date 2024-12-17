@@ -6,15 +6,15 @@ import { Pagination, PaginationInfo } from '@/interface';
 class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async getAllUsers(paginationObject: Pagination) {
-    const { page, limit } = paginationObject;
+  async getAllUsers(paginationParams: Pagination) {
+    const { page, limit } = paginationParams;
 
-    const { data, total } = await this.userRepository.getAllUsers(paginationObject);
+    const { data, total } = await this.userRepository.getAllUsers(paginationParams);
 
     const pagination: PaginationInfo = {
       count: total,
-      page,
-      page_size: limit,
+      page: Number(page),
+      page_size: Number(limit),
     };
     return { data, pagination };
   }

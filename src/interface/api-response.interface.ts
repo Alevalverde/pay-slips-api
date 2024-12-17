@@ -1,3 +1,5 @@
+import { PaginationInfo } from '.';
+
 export interface ApiResponse<T> {
   status: number;
   message: string | null;
@@ -9,10 +11,4 @@ export interface ApiResponse<T> {
 export interface ApiError {
   key: string;
   message: string;
-}
-
-export interface PaginationInfo {
-  count?: any;
-  page: number;
-  page_size: number;
 }

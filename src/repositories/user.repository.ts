@@ -1,6 +1,6 @@
 import { Model, Connection, Types } from 'mongoose';
 import { UserModel, UserSchema } from '@/models';
-import { Pagination } from '@/interface';
+import { Pagination, SortDir } from '@/interface';
 
 class UserRepository {
   private model: Model<UserModel>;
@@ -14,9 +14,9 @@ class UserRepository {
     const [data, total] = await Promise.all([
       this.model
         .find()
-        .sort({ [sort]: dir })
-        .skip(skip)
-        .limit(limit)
+        .sort({ [sort as string]: dir as SortDir })
+        .skip(skip!)
+        .limit(limit as number)
         .lean(),
       this.model.countDocuments(),
     ]);
@@ -34,7 +34,9 @@ class UserRepository {
    * @returns A promise that resolves to the updated or newly created user document.
    */
   async getOrUpdateUser(cuil: string, name: string) {
-    return this.model.findOneAndUpdate({ cuil }, { $setOnInsert: { cuil, name } }, { new: true, upsert: true }).lean();
+    return this.model
+      .findOneAndUpdate({ cuil }, { $setOnInsert: { cuil, name, status: true } }, { new: true, upsert: true })
+      .lean();
   }
 
   async getUserById(userId: Types.ObjectId) {
