@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { prepareResponse } from '@/utils/api-response';
 import PaySlipService from '@/services/pay-slip.service';
-import { FilePayload } from '@/models/interface';
+import { FilePayload } from '@/interface';
 
 class PaySlipController {
   constructor(private readonly paySlipService: PaySlipService) {}

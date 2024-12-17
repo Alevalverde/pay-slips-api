@@ -29,26 +29,6 @@ paths:
           $ref: '#/components/responses/ForbiddenResponse'
         '500':
           $ref: '#/components/responses/InternalErrorResponse'
-  '/users/{id}':
-    get:
-      tags:
-        - Users
-      summary: Get the list of users or each user by id.
-      description: This endpoint returns a list of users or each user by id
-      operationId: getUsers
-      parameters:
-        - $ref: '#/components/parameters/id'
-      responses:
-        '200':
-          $ref: '#/components/responses/GetUsersResponse'
-        '400':
-          $ref: '#/components/responses/BadRequestResponse'
-        '401':
-          $ref: '#/components/responses/UnauthorizedResponse'
-        '403':
-          $ref: '#/components/responses/ForbiddenResponse'
-        '500':
-          $ref: '#/components/responses/InternalErrorResponse'
   '/pay-slips/upload':
     post:
       tags:
@@ -70,6 +50,110 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  '/users/':
+    get:
+      tags:
+        - Users
+      summary: Get all users.
+      description: This endpoint returns a list of users with pagination
+      operationId: getAllUser
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/page_size'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/sort_dir'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetAllUserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+  '/users/{id}':
+    get:
+      tags:
+        - Users
+      summary: Get user by id.
+      description: This endpoint returns an user by id
+      operationId: getUser
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetUserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      description: This endpoint creates a new user
+      operationId: createUser
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateUser'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetUserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+    patch:
+      tags:
+        - Users
+      summary: Update an user by id
+      description: This endpoint update an user by id
+      operationId: updateUser
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateUser'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetUserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+    delete:
+      tags:
+        - Users
+      summary: Remove an user by id
+      description: This endpoint remove an user by id
+      operationId: deleteUser
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
 servers:
   - url: '{protocol}://{domain}{port}/{baseUrl}/{apiVersion}'
     description: Default
@@ -90,6 +174,13 @@ servers:
           - 'v1'
         default: 'v1'
 components:
+  requestBodies:
+    CreateUser:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserBody'
+            required: true
   responses:
     Success:
       description: Successful operation
@@ -125,7 +216,24 @@ components:
           schema:
             type: string
             example: attachment; filename="Bonos de sueldo - SEPT 2024.pdf"
-    GetUsersResponse:
+    GetUserResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/StandardResponse'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Users'
+                  message:
+                    type: string
+                    example: null
+                    nullable: true
+    GetAllUserResponse:
       description: Successful operation
       content:
         application/json:
@@ -143,8 +251,7 @@ components:
                     example: null
                     nullable: true
                   pagination:
-                    example: null
-                    nullable: true
+                    $ref: '#/components/schemas/Pagination'
     BadRequestResponse:
       description: Internal server error
       content:
@@ -200,6 +307,15 @@ components:
     InternalServerError:
       description: Internal server error
   schemas:
+    UserBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Riquelme, Juan Román
+        cuil:
+          type: string
+          example: 23-12345678-1
     CreateSuccessResponse:
       type: object
       properties:
@@ -244,6 +360,12 @@ components:
           type: string
         cuil:
           type: string
+        createdAt:
+          type: string
+          example: 2024-12-15T00:00:00.000Z
+        updatedAt:
+          type: string
+          example: 2024-12-15T00:00:00.000Z
     UploadFiles:
       type: object
       properties:

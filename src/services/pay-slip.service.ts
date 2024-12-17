@@ -6,7 +6,7 @@ import errors from '@/config/errors';
 import PaySlipRepository from '@/repositories/pay-slip.repository';
 import { PaySlip } from '@/models';
 import GoogleDriveService from './google-drive.service';
-import { FilePayload } from '@/models/interface';
+import { FilePayload } from '@/interface';
 import UserRepository from '@/repositories/user.repository';
 
 class PaySlipService {

@@ -12,7 +12,7 @@ export interface ApiError {
 }
 
 export interface PaginationInfo {
-  count?: number;
+  count?: any;
   page: number;
   page_size: number;
 }

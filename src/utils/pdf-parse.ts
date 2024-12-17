@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 import pdfParse from 'pdf-parse';
 import { PDFDocument } from 'pdf-lib';
-import { PdfDetails } from '@/models/interface';
+import { PdfDetails } from '@/interface';
 import { formatName } from '@/utils';
 
 export async function parsePDFDetailsWithBuffers(pdfBuffer: Buffer) {

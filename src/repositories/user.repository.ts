@@ -1,11 +1,29 @@
-import { Model, Connection } from 'mongoose';
+import { Model, Connection, Types } from 'mongoose';
 import { UserModel, UserSchema } from '@/models';
+import { Pagination } from '@/interface';
 
 class UserRepository {
   private model: Model<UserModel>;
 
   constructor(private readonly connection: Connection) {
     this.model = this.connection.model<UserModel>('UserModel', UserSchema, 'users');
+  }
+
+  async getAllUsers(paginationObject: Pagination) {
+    const { skip, limit, sort, dir } = paginationObject;
+    const [data, total] = await Promise.all([
+      this.model
+        .find()
+        .sort({ [sort]: dir })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      this.model.countDocuments(),
+    ]);
+    return {
+      data,
+      total,
+    };
   }
 
   /**
@@ -16,13 +34,11 @@ class UserRepository {
    * @returns A promise that resolves to the updated or newly created user document.
    */
   async getOrUpdateUser(cuil: string, name: string) {
-    return this.model
-      .findOneAndUpdate(
-        { cuil }, 
-        { $setOnInsert: { cuil, name } }, 
-        { new: true, upsert: true } 
-      )
-      .lean();
+    return this.model.findOneAndUpdate({ cuil }, { $setOnInsert: { cuil, name } }, { new: true, upsert: true }).lean();
+  }
+
+  async getUserById(userId: Types.ObjectId) {
+    return this.model.findOne({ _id: userId }).lean();
   }
 }
 
