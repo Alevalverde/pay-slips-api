@@ -162,4 +162,4 @@ credential-google-drive.json
 
 ### Script
 dev.sh
-
+git update-index --assume-unchanged .env

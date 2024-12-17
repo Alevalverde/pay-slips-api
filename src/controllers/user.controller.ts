@@ -27,27 +27,24 @@ class UserController {
       next(error);
     }
   };
-  
-  updateUserById = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { id } = req.params;
-      return res.json(prepareResponse(200, null));
-    } catch (error) {
-      next(error);
-    }
-  };
-  
-  deleteUserById = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { id } = req.params;
-      return res.json(prepareResponse(200, null));
-    } catch (error) {
-      next(error);
-    }
-  };
-
 
   createUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      return res.json(prepareResponse(200, null));
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  updateUserById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      return res.json(prepareResponse(200, null));
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  deleteUserById = async (req: Request, res: Response, next: NextFunction) => {
     try {
       return res.json(prepareResponse(200, null));
     } catch (error) {
