@@ -1,7 +1,7 @@
 {
   "name": "pay-slips-api",
   "version": "1.0.0",
-  "description": "SFJ API",
+  "description": "PDF API",
   "main": "src/index.ts",
   "scripts": {
     "start": "nodemon -r tsconfig-paths/register src/index.ts",
