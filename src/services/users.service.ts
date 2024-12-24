@@ -2,6 +2,7 @@ import { Types } from 'mongoose';
 import UserRepository from '@/repositories/user.repository';
 import errors from '@/config/errors';
 import { Pagination, PaginationInfo } from '@/interface';
+import { User } from '@/models';
 
 class UserService {
   constructor(private readonly userRepository: UserRepository) {}
@@ -24,8 +25,35 @@ class UserService {
     if (!user) {
       throw errors.user.not_found;
     }
-
     return user;
+  }
+
+  async createUser(payload: User) {
+    const { cuil } = payload;
+    const user = await this.userRepository.getUserByCuil(cuil);
+    if (user) {
+      throw errors.user.duplicate;
+    }
+    await this.userRepository.createUser(payload);
+  }
+
+  async updateUserById(id: string, payload: User) {
+    const userId = new Types.ObjectId(id);
+    const { cuil } = payload;
+    const user = await this.userRepository.getUserByCuil(cuil);
+    if (user?._id.toString() !== id) {
+      throw errors.user.duplicate;
+    }
+    await this.userRepository.updateUserById(userId, payload);
+  }
+
+  async deleteUserById(id: string) {
+    const userId = new Types.ObjectId(id);
+    const user = await this.userRepository.getUserById(userId);
+    if (!user) {
+      throw errors.user.not_found;
+    }
+    await this.userRepository.deleteUserById(userId);
   }
 }
 

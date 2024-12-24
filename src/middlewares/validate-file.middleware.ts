@@ -9,7 +9,7 @@ import config from '@/config';
 export function validateFile(req: Request, res: Response, next: NextFunction) {
   const uploadedFiles = req.files as Express.Multer.File[];
   if (uploadedFiles?.length === 0) {
-    return next();
+    return next(errors.document_upload.invalid);
   }
   uploadedFiles.forEach((uploadedFile) => {
     const { mimetype, size } = uploadedFile;

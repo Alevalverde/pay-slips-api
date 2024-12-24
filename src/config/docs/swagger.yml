@@ -57,14 +57,28 @@ paths:
       summary: Get all users.
       description: This endpoint returns a list of users with pagination
       operationId: getAllUser
-      parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/page_size'
-        - $ref: '#/components/parameters/sort'
-        - $ref: '#/components/parameters/sort_dir'
       responses:
         '200':
           $ref: '#/components/responses/GetAllUserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      description: This endpoint creates a new user
+      operationId: createUser
+      requestBody:
+        $ref: '#/components/requestBodies/CreateUser'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetUserResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse'
         '401':
@@ -82,27 +96,6 @@ paths:
       operationId: getUser
       parameters:
         - $ref: '#/components/parameters/id'
-      responses:
-        '200':
-          $ref: '#/components/responses/GetUserResponse'
-        '400':
-          $ref: '#/components/responses/BadRequestResponse'
-        '401':
-          $ref: '#/components/responses/UnauthorizedResponse'
-        '403':
-          $ref: '#/components/responses/ForbiddenResponse'
-        '500':
-          $ref: '#/components/responses/InternalErrorResponse'
-    post:
-      tags:
-        - Users
-      summary: Create a new user
-      description: This endpoint creates a new user
-      operationId: createUser
-      parameters:
-        - $ref: '#/components/parameters/id'
-      requestBody:
-        $ref: '#/components/requestBodies/CreateUser'
       responses:
         '200':
           $ref: '#/components/responses/GetUserResponse'
@@ -316,6 +309,9 @@ components:
         cuil:
           type: string
           example: 23-12345678-1
+        status:
+          type: boolean
+          example: true
     CreateSuccessResponse:
       type: object
       properties:

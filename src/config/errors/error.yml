@@ -55,3 +55,8 @@ user:
     message: El usuario no existe.
     message_eng: User not found.
     status: 404
+  duplicate:
+    key: user.duplicate
+    message: El cuil que intenta ingresar ya existe.
+    message_eng: The cuil you are trying to enter already exists.
+    status: 400

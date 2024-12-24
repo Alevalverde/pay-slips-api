@@ -30,6 +30,8 @@ class UserController {
 
   createUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const payload = req.body;
+      await this.userService.createUser(payload);
       return res.json(prepareResponse(200, null));
     } catch (error) {
       next(error);
@@ -38,6 +40,9 @@ class UserController {
 
   updateUserById = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const payload = req.body;
+      const { id } = req.params;
+      await this.userService.updateUserById(id, payload);
       return res.json(prepareResponse(200, null));
     } catch (error) {
       next(error);
@@ -46,6 +51,8 @@ class UserController {
 
   deleteUserById = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const { id } = req.params;
+      await this.userService.deleteUserById(id);
       return res.json(prepareResponse(200, null));
     } catch (error) {
       next(error);

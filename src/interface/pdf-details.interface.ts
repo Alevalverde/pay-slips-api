@@ -4,4 +4,3 @@ export interface PdfDetails {
   cuil: string | null;
   buffer: Buffer;
 }
-

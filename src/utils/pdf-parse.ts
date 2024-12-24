@@ -1,39 +1,50 @@
-/* eslint-disable no-await-in-loop */
 import pdfParse from 'pdf-parse';
 import { PDFDocument } from 'pdf-lib';
-import { PdfDetails } from '@/interface';
 import { formatName } from '@/utils';
 
+/**
+ * Parses a PDF buffer and extracts details from each page.
+ *
+ * This function processes a PDF buffer, extracts each page as a separate
+ * PDF, and retrieves specific details from the text content of each page.
+ * The extracted details include the page number, name, CUIL, and the
+ * page content as a buffer.
+ *
+ * @param pdfBuffer - The buffer of the PDF file to be processed.
+ * @returns A promise that resolves to an array of objects, each containing
+ * the page number, extracted name, CUIL, and the buffer of the single-page PDF.
+ */
 export async function parsePDFDetailsWithBuffers(pdfBuffer: Buffer) {
   const pdfDoc = await PDFDocument.load(pdfBuffer);
   const totalPages = pdfDoc.getPages().length;
 
-  const pdfDetailsArray: PdfDetails[] = [];
+  // Create an array of promises for processing each page
+  const pdfDetailsArray = await Promise.all(
+    Array.from({ length: totalPages }, async (_, i) => {
+      // Extract each page as a separate PDF
+      const singlePagePdf = await PDFDocument.create();
+      const [copiedPage] = await singlePagePdf.copyPages(pdfDoc, [i]);
+      singlePagePdf.addPage(copiedPage);
 
-  for (let i = 0; i < totalPages; i++) {
-    // Extraer cada página como un PDF separado
-    const singlePagePdf = await PDFDocument.create();
-    const [copiedPage] = await singlePagePdf.copyPages(pdfDoc, [i]);
-    singlePagePdf.addPage(copiedPage);
+      // Save the single-page PDF as Uint8Array and convert it to Buffer
+      const singlePageUint8Array = await singlePagePdf.save();
+      const singlePageBuffer = Buffer.from(singlePageUint8Array);
 
-    // Guardar el PDF de la página como Uint8Array y convertir a Buffer
-    const singlePageUint8Array = await singlePagePdf.save();
-    const singlePageBuffer = Buffer.from(singlePageUint8Array);
+      // Extract the text from the page using pdf-parse
+      const pageText = await pdfParse(singlePageBuffer).then((data) => data.text);
 
-    // Leer el texto de la página usando pdf-parse
-    const pageText = await pdfParse(singlePageBuffer).then((data) => data.text);
+      // Find the CUIL in the text
+      const cuilMatch = pageText.match(/CUIL:\s?(\d{2}-\d{8}-\d)/);
+      const cuil = cuilMatch && cuilMatch[1] ? cuilMatch[1] : null;
 
-    // Buscar el CUIL en el texto
-    const cuilMatch = pageText.match(/CUIL:\s?(\d{2}-\d{8}-\d)/);
-    const cuil = cuilMatch && cuilMatch[1] ? cuilMatch[1] : null;
+      // Split the text into lines and extract "name" from line 6
+      const lines = pageText.split('\n');
+      const name = lines[6] ? formatName(lines[6]) : null;
 
-    // Dividir el texto en líneas y obtener "name" (línea 6)
-    const lines = pageText.split('\n');
-    const name = lines[6] ? formatName(lines[6]) : null;
-
-    // Agregar los datos al array incluyendo el buffer de la página
-    pdfDetailsArray.push({ page: i + 1, name, cuil, buffer: singlePageBuffer });
-  }
+      // Return the processed details for this page
+      return { page: i + 1, name, cuil, buffer: singlePageBuffer };
+    })
+  );
 
   return pdfDetailsArray;
 }
