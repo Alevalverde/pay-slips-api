@@ -20,7 +20,8 @@ class UserService {
     return { data, pagination };
   }
 
-  async getUserById(userId: Types.ObjectId) {
+  async getUserById(id: string) {
+    const userId = new Types.ObjectId(id);
     const user = await this.userRepository.getUserById(userId);
     if (!user) {
       throw errors.user.not_found;

@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { Types } from 'mongoose';
 import { prepareResponse } from '@/utils/api-response';
 import PaySlipService from '@/services/pay-slip.service';
 import { FilePayload } from '@/interface';
@@ -10,8 +9,7 @@ class PaySlipController {
   getPaySlip = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      const idPaySlip = new Types.ObjectId(id);
-      const paySlipsPDF = await this.paySlipService.getPaySlip(idPaySlip, res);
+      const paySlipsPDF = await this.paySlipService.getPaySlip(id, res);
       return paySlipsPDF.data.pipe(res);
     } catch (error) {
       next(error);
@@ -40,8 +38,8 @@ class PaySlipController {
 
   updatePaySlip = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const payload = req.body;
       const { id } = req.params;
+      const payload = req.body;
       await this.paySlipService.updatePaySlip(id, payload);
       return res.json(prepareResponse(200, null));
     } catch (error) {
@@ -52,8 +50,7 @@ class PaySlipController {
   deletePaySlip = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      const paySlipId = new Types.ObjectId(id);
-      await this.paySlipService.deletePaySlip(paySlipId);
+      await this.paySlipService.deletePaySlip(id);
       return res.json(prepareResponse(200, null));
     } catch (error) {
       next(error);
@@ -64,8 +61,7 @@ class PaySlipController {
     try {
       const { id } = req.params;
       const { year } = req.query;
-      const userId = new Types.ObjectId(id);
-      const paySlips = await this.paySlipService.getPaySlipsByUserId(userId, year as string);
+      const paySlips = await this.paySlipService.getPaySlipsByUserId(id, year as string);
       return res.json(prepareResponse(200, null, paySlips));
     } catch (error) {
       next(error);

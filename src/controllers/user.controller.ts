@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { Types } from 'mongoose';
 import UserService from '@/services/users.service';
 import { formatPaginationParams, prepareResponse } from '@/utils';
 import { PaginationQuery } from '@/interface';
@@ -20,8 +19,7 @@ class UserController {
   getUserById = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      const userId = new Types.ObjectId(id);
-      const data = await this.userService.getUserById(userId);
+      const data = await this.userService.getUserById(id);
       return res.json(prepareResponse(200, null, data));
     } catch (error) {
       next(error);

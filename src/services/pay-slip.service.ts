@@ -24,9 +24,10 @@ class PaySlipService {
    * @throws {errors.pay_slip.not_exist} If the payslip document is not found.
    * @throws {errors.pay_slip.invalid_url} If the PDF file cannot be downloaded.
    */
-  async getPaySlip(id: Types.ObjectId, res: Response) {
+  async getPaySlip(id: string, res: Response) {
     try {
-      const paySlips = await this.paySlipRepository.getPaySlip(id);
+      const idPaySlip = new Types.ObjectId(id);
+      const paySlips = await this.paySlipRepository.getPaySlip(idPaySlip);
 
       if (!paySlips) throw errors.pay_slip.not_exist;
       const fileUrl = paySlips.url;
@@ -119,7 +120,8 @@ class PaySlipService {
     await this.paySlipRepository.updatePaySlip(paySlipId, payload);
   }
 
-  async deletePaySlip(paySlipId: Types.ObjectId) {
+  async deletePaySlip(id: string) {
+    const paySlipId = new Types.ObjectId(id);
     const paySlip = await this.paySlipRepository.getPaySlip(paySlipId);
     if (!paySlip) {
       throw errors.pay_slip.not_exist;
@@ -127,7 +129,8 @@ class PaySlipService {
     await this.paySlipRepository.deletePaySlip(paySlipId);
   }
 
-  async getPaySlipsByUserId(userId: Types.ObjectId, year: string) {
+  async getPaySlipsByUserId(id: string, year: string) {
+    const userId = new Types.ObjectId(id);
     const user = await this.userRepository.getUserById(userId);
     if (!user) {
       throw errors.user.not_exist;
