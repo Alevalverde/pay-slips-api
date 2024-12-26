@@ -9,6 +9,27 @@ info:
     name: Alejandro Valverde
     email: avalverde@midasconsultores.com.ar
 paths:
+  '/users/{id}/pay-slips':
+    get:
+      tags:
+        - Pay Slips
+      summary: Get pay slips by user id
+      description: This endpoint returns an array of pay slips by user id
+      operationId: getPaySlipByUser
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/year'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetPaySlipResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
   '/pay-slips/{id}':
     get:
       tags:
@@ -272,6 +293,23 @@ components:
                     type: string
                     example: null
                     nullable: true
+    GetPaySlipResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/StandardResponse'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PaySlip'
+                  message:
+                    type: string
+                    example: null
+                    nullable: true
     GetAllUserResponse:
       description: Successful operation
       content:
@@ -358,6 +396,33 @@ components:
         status:
           type: boolean
           example: true
+    PaySlip:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 676daf02bdb8817b2961cd44
+        name:
+          type: string
+          example: BS - ABR 2024 - Tello, Pepe
+        month:
+          type: string
+          example: ABR
+        year:
+          type: string
+          example: 2024
+        userId:
+          type: string
+          example: 6769b8859b5de45dd4723334
+        createdAt:
+          type: string
+          example: 2024-12-15T00:00:00.000Z
+        updatedAt:
+          type: string
+          example: 2024-12-15T00:00:00.000Z
+    PaySlipResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
     PaySlipBody:
       type: object
       properties:
@@ -492,6 +557,12 @@ components:
       name: id
       in: path
       required: true
+      schema:
+        type: string
+    year:
+      name: year
+      in: query
+      required: false
       schema:
         type: string
     page:

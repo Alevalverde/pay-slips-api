@@ -52,8 +52,21 @@ class PaySlipController {
   deletePaySlip = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      await this.paySlipService.deletePaySlip(id);
+      const paySlipId = new Types.ObjectId(id);
+      await this.paySlipService.deletePaySlip(paySlipId);
       return res.json(prepareResponse(200, null));
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getPaySlipsByUserId = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const { year } = req.query;
+      const userId = new Types.ObjectId(id);
+      const paySlips = await this.paySlipService.getPaySlipsByUserId(userId, year as string);
+      return res.json(prepareResponse(200, null, paySlips));
     } catch (error) {
       next(error);
     }

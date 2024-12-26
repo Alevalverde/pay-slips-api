@@ -23,6 +23,13 @@ class PaySlipRepository {
   async deletePaySlip(id: Types.ObjectId) {
     return this.model.deleteOne({ _id: id });
   }
+
+  async getPaySlipsByUserId(userId: Types.ObjectId, year: string) {
+    if (!year) {
+      return this.model.find({ userId });
+    }
+    return this.model.find({ userId, year });
+  }
 }
 
 export default PaySlipRepository;

@@ -74,7 +74,7 @@ class PaySlipService {
 
       await Promise.all(
         pdfDetailsArray.map(async (payslip, index) => {
-          await delay(index * 80);
+          await delay(index * 100);
 
           const pdfName = `${folderName} - ${payslip.name}`;
           const urlPdf = await this.googleDriveService.uploadFileToGoogleDrive(payslip.buffer, pdfName, folderId!);
@@ -119,13 +119,21 @@ class PaySlipService {
     await this.paySlipRepository.updatePaySlip(paySlipId, payload);
   }
 
-  async deletePaySlip(id: string) {
-    const paySlipId = new Types.ObjectId(id);
+  async deletePaySlip(paySlipId: Types.ObjectId) {
     const paySlip = await this.paySlipRepository.getPaySlip(paySlipId);
     if (!paySlip) {
       throw errors.pay_slip.not_exist;
     }
     await this.paySlipRepository.deletePaySlip(paySlipId);
+  }
+
+  async getPaySlipsByUserId(userId: Types.ObjectId, year: string) {
+    const user = await this.userRepository.getUserById(userId);
+    if (!user) {
+      throw errors.user.not_exist;
+    }
+    const paySlips = await this.paySlipRepository.getPaySlipsByUserId(userId, year);
+    return paySlips;
   }
 }
 
