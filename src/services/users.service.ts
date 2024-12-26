@@ -40,8 +40,12 @@ class UserService {
   async updateUserById(id: string, payload: User) {
     const userId = new Types.ObjectId(id);
     const { cuil } = payload;
-    const user = await this.userRepository.getUserByCuil(cuil);
-    if (user?._id.toString() !== id) {
+    let user = await this.userRepository.getUserById(userId);
+    if (!user) {
+      throw errors.user.not_found;
+    }
+    user = await this.userRepository.getUserByCuil(cuil);
+    if (user && user._id.toString() !== id) {
       throw errors.user.duplicate;
     }
     await this.userRepository.updateUserById(userId, payload);

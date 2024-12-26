@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
 import { NextFunction, Request, Response } from 'express';
+import { Types } from 'mongoose';
 import UserService from '@/services/users.service';
 import { formatPaginationParams, prepareResponse } from '@/utils';
 import { PaginationQuery } from '@/interface';
@@ -20,7 +20,7 @@ class UserController {
   getUserById = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      const userId = new mongoose.Types.ObjectId(id);
+      const userId = new Types.ObjectId(id);
       const data = await this.userService.getUserById(userId);
       return res.json(prepareResponse(200, null, data));
     } catch (error) {
@@ -40,8 +40,8 @@ class UserController {
 
   updateUserById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const payload = req.body;
       const { id } = req.params;
+      const payload = req.body;
       await this.userService.updateUserById(id, payload);
       return res.json(prepareResponse(200, null));
     } catch (error) {

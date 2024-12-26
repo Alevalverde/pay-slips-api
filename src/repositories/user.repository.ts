@@ -1,4 +1,4 @@
-import { Model, Connection, Types } from 'mongoose';
+import { Model, Connection, Types, Schema } from 'mongoose';
 import { User, UserModel, UserSchema } from '@/models';
 import { Pagination, SortDir } from '@/interface';
 
@@ -26,7 +26,7 @@ class UserRepository {
     };
   }
 
-   async getOrUpdateUser(cuil: string, name: string) {
+  async getOrUpdateUser(cuil: string, name: string) {
     return this.model
       .findOneAndUpdate({ cuil }, { $setOnInsert: { cuil, name, status: true } }, { new: true, upsert: true })
       .lean();

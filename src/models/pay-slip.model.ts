@@ -1,11 +1,11 @@
-import { Document, Schema } from 'mongoose';
+import { Document, Schema, Types } from 'mongoose';
 
 interface PaySlip {
   name: string;
   month: string;
   year: string;
   url: string;
-  user: Schema.Types.ObjectId;
+  userId: Types.ObjectId;
 }
 
 interface PaySlipModel extends PaySlip, Document {}
@@ -16,7 +16,7 @@ const PaySlipSchema: Schema = new Schema<PaySlipModel>(
     month: { type: String, required: true },
     year: { type: String, required: true },
     url: { type: String, required: true },
-    user: { type: Schema.Types.ObjectId, ref: 'User' },
+    userId: { type: Schema.Types.ObjectId, ref: 'User' },
   },
   { timestamps: true, versionKey: false }
 );

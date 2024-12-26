@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import mongoose from 'mongoose';
+import { Types } from 'mongoose';
 import { prepareResponse } from '@/utils/api-response';
 import PaySlipService from '@/services/pay-slip.service';
 import { FilePayload } from '@/interface';
@@ -10,7 +10,7 @@ class PaySlipController {
   getPaySlip = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      const idPaySlip = new mongoose.Types.ObjectId(id);
+      const idPaySlip = new Types.ObjectId(id);
       const paySlipsPDF = await this.paySlipService.getPaySlip(idPaySlip, res);
       return paySlipsPDF.data.pipe(res);
     } catch (error) {
@@ -21,13 +21,38 @@ class PaySlipController {
   uploadPaySlip = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const file = req.files as Express.Multer.File[];
+
       const { nameFile, month, year } = req.body;
+
       const filePayload: FilePayload = {
         nameFile,
         month,
         year,
       };
+
       await this.paySlipService.uploadPaySlip(file[0], filePayload);
+
+      return res.json(prepareResponse(200, null));
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  updatePaySlip = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const payload = req.body;
+      const { id } = req.params;
+      await this.paySlipService.updatePaySlip(id, payload);
+      return res.json(prepareResponse(200, null));
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  deletePaySlip = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      await this.paySlipService.deletePaySlip(id);
       return res.json(prepareResponse(200, null));
     } catch (error) {
       next(error);

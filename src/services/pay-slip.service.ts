@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { ObjectId, Types } from 'mongoose';
+import { Types } from 'mongoose';
 import { Response } from 'express';
-import { logger, parsePDFDetailsWithBuffers } from '@/utils';
+import { delay, logger, parsePDFDetailsWithBuffers } from '@/utils';
 import errors from '@/config/errors';
 import PaySlipRepository from '@/repositories/pay-slip.repository';
 import { PaySlip } from '@/models';
@@ -16,6 +16,14 @@ class PaySlipService {
     private readonly userRepository: UserRepository
   ) {}
 
+  /**
+   * Gets a payslip document by its ID and sends it as a PDF response.
+   * @param id - The ID of the payslip to find.
+   * @param res - The Express response object to send the PDF response.
+   * @returns A promise that resolves to the PDF response.
+   * @throws {errors.pay_slip.not_exist} If the payslip document is not found.
+   * @throws {errors.pay_slip.invalid_url} If the PDF file cannot be downloaded.
+   */
   async getPaySlip(id: Types.ObjectId, res: Response) {
     try {
       const paySlips = await this.paySlipRepository.getPaySlip(id);
@@ -34,6 +42,12 @@ class PaySlipService {
     }
   }
 
+  /**
+   * Downloads a PDF file from a given URL.
+   * @param fileUrl - The URL of the PDF file to download.
+   * @returns A promise that resolves to the PDF file as a stream.
+   * @throws {errors.pay_slip.invalid_url} If the PDF file cannot be downloaded.
+   */
   private async downloadPaySlipsPDF(fileUrl: string) {
     try {
       return await axios.get(fileUrl, { responseType: 'stream' });
@@ -44,18 +58,10 @@ class PaySlipService {
   }
 
   /**
-   * Uploads a payslip PDF to Google Drive and saves its details in the database.
-   *
-   * This function performs the following steps:
-   * 1. Creates a folder in Google Drive using the provided file payload details.
-   * 2. Parses the uploaded PDF file to extract individual pages.
-   * 3. For each extracted page, uploads it as a separate PDF to Google Drive.
-   * 4. Retrieves or updates the user information based on extracted CUIL and name.
-   * 5. Saves the payslip details, including the uploaded PDF URL, to the database.
-   *
-   * @param file - The uploaded PDF file containing payslips.
-   * @param filePayload - An object containing the file name, month, and year for the payslip.
-   * @throws Will log an error and rethrow if any step of the process fails.
+   * Uploads a payslip PDF to Google Drive and saves the PDF URLs to the database.
+   * @param file - The payslip PDF file to upload.
+   * @param filePayload - The details of the payslip PDF file, including the name, month, and year.
+   * @returns The uploaded PDF URLs.
    */
   async uploadPaySlip(file: Express.Multer.File, filePayload: FilePayload) {
     const { nameFile, month, year } = filePayload;
@@ -66,30 +72,60 @@ class PaySlipService {
       const pdfDetailsArray = await parsePDFDetailsWithBuffers(pdfBuffer);
       const pdfRejected = [];
 
-      pdfDetailsArray.forEach(async (payslip) => {
-        const pdfName = `${folderName} - ${payslip.name}`;
-        const urlPdf = await this.googleDriveService.uploadFileToGoogleDrive(payslip.buffer, pdfName, folderId!);
+      await Promise.all(
+        pdfDetailsArray.map(async (payslip, index) => {
+          await delay(index * 80);
 
-        const { cuil, name } = payslip;
-        if (!cuil || !name) {
-          pdfRejected.push(payslip);
-          return;
-        }
-        const userId = await this.userRepository.getOrUpdateUser(cuil, name);
+          const pdfName = `${folderName} - ${payslip.name}`;
+          const urlPdf = await this.googleDriveService.uploadFileToGoogleDrive(payslip.buffer, pdfName, folderId!);
 
-        const payslipDetails: PaySlip = {
-          month,
-          year,
-          url: urlPdf,
-          name: pdfName,
-          user: userId._id as ObjectId,
-        };
-        await this.paySlipRepository.uploadPaySlip(payslipDetails);
-      });
+          const { cuil, name } = payslip;
+          if (!cuil || !name) {
+            pdfRejected.push(payslip);
+            return;
+          }
+
+          const userId = await this.userRepository.getOrUpdateUser(cuil, name);
+
+          const payslipDetails: PaySlip = {
+            month,
+            year,
+            url: urlPdf,
+            name: pdfName,
+            userId: userId._id as Types.ObjectId,
+          };
+
+          await this.paySlipRepository.uploadPaySlip(payslipDetails);
+        })
+      );
     } catch (error) {
       logger.error('Error at PaySlipService.uploadPaySlip ->', error);
       throw error;
     }
+  }
+
+  async updatePaySlip(id: string, payload: PaySlip) {
+    const paySlipId = new Types.ObjectId(id);
+    let { userId } = payload;
+
+    const user = await this.userRepository.getUserById(userId);
+    if (!user) {
+      throw errors.user.not_exist;
+    }
+    const paySlip = await this.paySlipRepository.getPaySlip(paySlipId);
+    if (!paySlip) {
+      throw errors.pay_slip.not_exist;
+    }
+    await this.paySlipRepository.updatePaySlip(paySlipId, payload);
+  }
+
+  async deletePaySlip(id: string) {
+    const paySlipId = new Types.ObjectId(id);
+    const paySlip = await this.paySlipRepository.getPaySlip(paySlipId);
+    if (!paySlip) {
+      throw errors.pay_slip.not_exist;
+    }
+    await this.paySlipRepository.deletePaySlip(paySlipId);
   }
 }
 

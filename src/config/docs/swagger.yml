@@ -29,6 +29,46 @@ paths:
           $ref: '#/components/responses/ForbiddenResponse'
         '500':
           $ref: '#/components/responses/InternalErrorResponse'
+    patch:
+      tags:
+        - Pay Slips
+      summary: Update a pay slip by id
+      description: This endpoint update a pay slip by id
+      operationId: updatePaySlip
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdatePaySlip'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
+    delete:
+      tags:
+        - Pay Slips
+      summary: Remove a pay slip by id
+      description: This endpoint remove a pay slip by id
+      operationId: deletePaySlip
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
   '/pay-slips/upload':
     post:
       tags:
@@ -174,6 +214,12 @@ components:
           schema:
             $ref: '#/components/schemas/UserBody'
             required: true
+    UpdatePaySlip:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaySlipBody'
+            required: true
   responses:
     Success:
       description: Successful operation
@@ -312,6 +358,21 @@ components:
         status:
           type: boolean
           example: true
+    PaySlipBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: BS - ABR 2024 - Tello, Pepe
+        month:
+          type: string
+          example: ABR
+        year:
+          type: string
+          example: 2024
+        user_id:
+          type: string
+          example: 6769b8859b5de45dd4723334
     CreateSuccessResponse:
       type: object
       properties:
