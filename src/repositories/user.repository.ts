@@ -1,6 +1,6 @@
-import { Model, Connection, Types, Schema } from 'mongoose';
+import { Model, Connection, Types } from 'mongoose';
 import { User, UserModel, UserSchema } from '@/models';
-import { Pagination, SortDir } from '@/interface';
+import { Pagination, SortDir } from '@/interfaces';
 
 class UserRepository {
   private model: Model<UserModel>;
@@ -28,7 +28,11 @@ class UserRepository {
 
   async getOrUpdateUser(cuil: string, name: string) {
     return this.model
-      .findOneAndUpdate({ cuil }, { $setOnInsert: { cuil, name, status: true } }, { new: true, upsert: true })
+      .findOneAndUpdate(
+        { cuil },
+        { $setOnInsert: { cuil, name, status: true, type: ['prueba'], password: null } },
+        { new: true, upsert: true }
+      )
       .lean();
   }
 

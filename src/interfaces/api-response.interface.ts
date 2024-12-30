@@ -1,4 +1,4 @@
-import { PaginationInfo } from '.';
+import { PaginationInfo } from './pagination.interface';
 
 export interface ApiResponse<T> {
   status: number;

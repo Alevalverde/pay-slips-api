@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
 import UserRepository from '@/repositories/user.repository';
 import errors from '@/config/errors';
-import { Pagination, PaginationInfo } from '@/interface';
+import { Pagination, PaginationInfo } from '@/interfaces';
 import { User } from '@/models';
 
 class UserService {

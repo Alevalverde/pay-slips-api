@@ -496,10 +496,26 @@ components:
           format: binary
         nameFile:
           type: string
-          example: 'BS'
+          enum:
+            - BS
+            - 1° SAC
+            - 2° SAC
+            - BOLETA DE PAGO
         month:
           type: string
-          example: 'ABR'
+          enum:
+            - ENE
+            - FEB
+            - MAR
+            - ABR
+            - MAY
+            - JUN
+            - JUL
+            - AGO
+            - SEP
+            - OCT
+            - NOV
+            - DIC
         year:
           type: string
           example: '2024'

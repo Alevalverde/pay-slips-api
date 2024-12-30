@@ -1,4 +1,4 @@
-import { Pagination, PaginationParams, PaginationQuery, SortDir } from '@/interface';
+import { Pagination, PaginationParams, PaginationQuery, SortDir } from '@/interfaces';
 
 const isNumber = (value: string) => !Number.isNaN(parseFloat(value)) && Number.isFinite(value);
 

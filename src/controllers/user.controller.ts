@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import UserService from '@/services/users.service';
 import { formatPaginationParams, prepareResponse } from '@/utils';
-import { PaginationQuery } from '@/interface';
+import { PaginationQuery } from '@/interfaces';
 
 class UserController {
   constructor(private readonly userService: UserService) {}

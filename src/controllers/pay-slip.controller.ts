@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { prepareResponse } from '@/utils/api-response';
 import PaySlipService from '@/services/pay-slip.service';
-import { FilePayload } from '@/interface';
+import { FilePayload } from '@/interfaces';
 
 class PaySlipController {
   constructor(private readonly paySlipService: PaySlipService) {}
