@@ -1,4 +1,4 @@
-import { Model, Connection, Types } from 'mongoose';
+import { Model, Connection, Types, ClientSession } from 'mongoose';
 import { PaySlip, PaySlipModel, PaySlipSchema } from '@/models';
 
 class PaySlipRepository {
@@ -8,12 +8,22 @@ class PaySlipRepository {
     this.model = this.connection.model<PaySlipModel>('PaySlipModel', PaySlipSchema, 'payslips');
   }
 
+  /**
+   * Starts a MongoDB transaction.
+   * @returns A MongoDB session object.
+   */
+  async startTransaction() {
+    const session = await this.connection.startSession();
+    session.startTransaction();
+    return session;
+  }
+
   async getPaySlip(id: Types.ObjectId) {
     return this.model.findById(id);
   }
 
-  async uploadPaySlip(payslipDetails: PaySlip) {
-    return this.model.create(payslipDetails);
+  async uploadPaySlip(payslipDetails: PaySlip, session: ClientSession) {
+    return this.model.create([payslipDetails], { session });
   }
 
   async updatePaySlip(id: Types.ObjectId, payload: PaySlip) {

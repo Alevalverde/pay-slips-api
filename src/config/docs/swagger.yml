@@ -396,6 +396,14 @@ components:
         status:
           type: boolean
           example: true
+        type:
+          type: array
+          items:
+            type: string
+            example: employee, payment_holder
+        password:
+          type: string
+          example: password
     PaySlip:
       type: object
       properties:

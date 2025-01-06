@@ -1,4 +1,4 @@
-import { Model, Connection, Types } from 'mongoose';
+import { Model, Connection, Types, ClientSession } from 'mongoose';
 import { User, UserModel, UserSchema } from '@/models';
 import { Pagination, SortDir } from '@/interfaces';
 
@@ -26,12 +26,12 @@ class UserRepository {
     };
   }
 
-  async getOrUpdateUser(cuil: string, name: string) {
+  async getOrUpdateUser(cuil: string, name: string, session: ClientSession) {
     return this.model
       .findOneAndUpdate(
         { cuil },
         { $setOnInsert: { cuil, name, status: true, type: ['prueba'], password: null } },
-        { new: true, upsert: true }
+        { new: true, upsert: true, session }
       )
       .lean();
   }

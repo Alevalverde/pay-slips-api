@@ -41,11 +41,11 @@ class GoogleDriveService {
 
       const fileId = response.data.id;
 
-      const uploadedFileUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+      const urlPdf = `https://drive.google.com/uc?export=download&id=${fileId}`;
 
-      logger.info(`File successfully uploaded to Google Drive -> URL: ${uploadedFileUrl}`);
+      logger.info(`File successfully uploaded to Google Drive -> URL: ${urlPdf}`);
 
-      return uploadedFileUrl;
+      return { urlPdf, fileId };
     } catch (error) {
       logger.error(`Error updateing file to Google Drive: ${error}`);
       throw error;
@@ -70,6 +70,27 @@ class GoogleDriveService {
       return folderId;
     } catch (error) {
       logger.error(`Error creating folder in Google Drive: ${error}`);
+      throw error;
+    }
+  }
+
+  async deleteFileFromGoogleDrive(fileId: string) {
+    const driveService = await this.createDriveClient();
+    try {
+      await driveService.files.delete({ fileId });
+    } catch (error) {
+      logger.error(`Error deleting file from Google Drive (File ID: ${fileId}): ${error}`);
+      throw error;
+    }
+  }
+
+  async deleteFolderFromGoogleDrive(folderId: string) {
+    const driveService = await this.createDriveClient();
+    try {
+      await driveService.files.delete({ fileId: folderId });
+      logger.info(`Folder with ID '${folderId}' successfully deleted from Google Drive.`);
+    } catch (error) {
+      logger.error(`Error deleting folder from Google Drive (Folder ID: ${folderId}): ${error}`);
       throw error;
     }
   }
