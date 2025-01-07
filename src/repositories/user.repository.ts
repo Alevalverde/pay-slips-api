@@ -30,7 +30,7 @@ class UserRepository {
     return this.model
       .findOneAndUpdate(
         { cuil },
-        { $setOnInsert: { cuil, name, status: true, type: ['prueba'], password: null } },
+        { $setOnInsert: { cuil, name, status: true, type: ['prueba'], password: cuil?.replace(/-/g, '') } },
         { new: true, upsert: true, session }
       )
       .lean();

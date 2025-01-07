@@ -3,6 +3,7 @@ import UserRepository from '@/repositories/user.repository';
 import errors from '@/config/errors';
 import { Pagination, PaginationInfo } from '@/interfaces';
 import { User } from '@/models';
+import { encryptPassword } from '@/utils';
 
 class UserService {
   constructor(private readonly userRepository: UserRepository) {}
@@ -39,15 +40,23 @@ class UserService {
   }
 
   async updateUserById(id: string, payload: User) {
+    const { cuil, password } = payload;
     const userId = new Types.ObjectId(id);
-    const { cuil } = payload;
+
     let user = await this.userRepository.getUserById(userId);
     if (!user) {
       throw errors.user.not_found;
     }
-    user = await this.userRepository.getUserByCuil(cuil);
-    if (user && user._id.toString() !== id) {
-      throw errors.user.duplicate;
+
+    if (cuil) {
+      user = await this.userRepository.getUserByCuil(cuil);
+      if (user && user._id.toString() !== id) {
+        throw errors.user.duplicate;
+      }
+    }
+
+    if (password) {
+      payload.password = await encryptPassword(password);
     }
     await this.userRepository.updateUserById(userId, payload);
   }

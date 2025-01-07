@@ -400,7 +400,7 @@ components:
           type: array
           items:
             type: string
-            example: employee, payment_holder
+            example: employee
         password:
           type: string
           example: password
