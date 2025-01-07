@@ -118,6 +118,10 @@ paths:
       summary: Get all users.
       description: This endpoint returns a list of users with pagination
       operationId: getAllUser
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/page_size'
+        - $ref: '#/components/parameters/sort'
       responses:
         '200':
           $ref: '#/components/responses/GetAllUserResponse'
