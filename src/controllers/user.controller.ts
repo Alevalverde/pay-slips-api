@@ -30,7 +30,7 @@ class UserController {
     try {
       const payload = req.body;
       await this.userService.createUser(payload);
-      return res.json(prepareResponse(200, null));
+      return res.json(prepareResponse(200, 'Successful operation'));
     } catch (error) {
       next(error);
     }
@@ -41,7 +41,7 @@ class UserController {
       const { id } = req.params;
       const payload = req.body;
       await this.userService.updateUserById(id, payload);
-      return res.json(prepareResponse(200, null));
+      return res.json(prepareResponse(200, 'Successful operation'));
     } catch (error) {
       next(error);
     }
@@ -51,7 +51,7 @@ class UserController {
     try {
       const { id } = req.params;
       await this.userService.deleteUserById(id);
-      return res.json(prepareResponse(200, null));
+      return res.json(prepareResponse(200, 'Successful operation'));
     } catch (error) {
       next(error);
     }

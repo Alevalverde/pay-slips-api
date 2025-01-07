@@ -16,6 +16,17 @@ class PaySlipController {
     }
   };
 
+  getPaySlipsByUserId = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const { year } = req.query;
+      const paySlips = await this.paySlipService.getPaySlipsByUserId(id, year as string);
+      return res.json(prepareResponse(200, null, paySlips));
+    } catch (error) {
+      next(error);
+    }
+  };
+
   uploadPaySlip = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const file = req.files as Express.Multer.File[];
@@ -30,7 +41,7 @@ class PaySlipController {
 
       await this.paySlipService.uploadPaySlip(file[0], filePayload);
 
-      return res.json(prepareResponse(200, null));
+      return res.json(prepareResponse(200, 'Successful operation'));
     } catch (error) {
       next(error);
     }
@@ -41,7 +52,7 @@ class PaySlipController {
       const { id } = req.params;
       const payload = req.body;
       await this.paySlipService.updatePaySlip(id, payload);
-      return res.json(prepareResponse(200, null));
+      return res.json(prepareResponse(200, 'Successful operation'));
     } catch (error) {
       next(error);
     }
@@ -51,18 +62,7 @@ class PaySlipController {
     try {
       const { id } = req.params;
       await this.paySlipService.deletePaySlip(id);
-      return res.json(prepareResponse(200, null));
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  getPaySlipsByUserId = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { id } = req.params;
-      const { year } = req.query;
-      const paySlips = await this.paySlipService.getPaySlipsByUserId(id, year as string);
-      return res.json(prepareResponse(200, null, paySlips));
+      return res.json(prepareResponse(200, 'Successful operation'));
     } catch (error) {
       next(error);
     }
