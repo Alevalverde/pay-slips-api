@@ -111,10 +111,10 @@ class PaySlipService {
     try {
       const paySlipId = new Types.ObjectId(id);
       let { userId } = payload;
-
+      
       const user = await this.userRepository.getUserById(userId);
       if (!user) {
-        throw errors.user.not_exist;
+        throw errors.user.not_found;
       }
       const paySlip = await this.paySlipRepository.getPaySlip(paySlipId);
       if (!paySlip) {
