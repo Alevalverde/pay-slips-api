@@ -9,6 +9,26 @@ info:
     name: Alejandro Valverde
     email: avalverde@midasconsultores.com.ar
 paths:
+  '/register':
+    post:
+      tags:
+        - Auth
+      summary: Register a new user
+      description: This endpoint creates a new user
+      operationId: RegisterUser
+      requestBody:
+        $ref: '#/components/requestBodies/CreateUser'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetUserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
   '/users/{id}/pay-slips':
     get:
       tags:
@@ -125,25 +145,6 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/GetAllUserResponse'
-        '400':
-          $ref: '#/components/responses/BadRequestResponse'
-        '401':
-          $ref: '#/components/responses/UnauthorizedResponse'
-        '403':
-          $ref: '#/components/responses/ForbiddenResponse'
-        '500':
-          $ref: '#/components/responses/InternalErrorResponse'
-    post:
-      tags:
-        - Users
-      summary: Create a new user
-      description: This endpoint creates a new user
-      operationId: createUser
-      requestBody:
-        $ref: '#/components/requestBodies/CreateUser'
-      responses:
-        '200':
-          $ref: '#/components/responses/GetUserResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse'
         '401':
@@ -400,11 +401,6 @@ components:
         status:
           type: boolean
           example: true
-        type:
-          type: array
-          items:
-            type: string
-            example: employee
         password:
           type: string
           example: password

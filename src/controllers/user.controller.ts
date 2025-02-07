@@ -26,16 +26,6 @@ class UserController {
     }
   };
 
-  createUser = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const payload = req.body;
-      await this.userService.createUser(payload);
-      return res.json(prepareResponse(200, 'Successful operation'));
-    } catch (error) {
-      next(error);
-    }
-  };
-
   updateUserById = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;

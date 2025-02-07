@@ -30,15 +30,6 @@ class UserService {
     return user;
   }
 
-  async createUser(payload: User) {
-    const { cuil } = payload;
-    const user = await this.userRepository.getUserByCuil(cuil);
-    if (user) {
-      throw errors.user.duplicate;
-    }
-    await this.userRepository.createUser(payload);
-  }
-
   async updateUserById(id: string, payload: User) {
     const { cuil, password } = payload;
     const userId = new Types.ObjectId(id);
