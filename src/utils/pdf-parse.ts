@@ -14,10 +14,9 @@ import { formatName } from '@/utils';
  * @returns A promise that resolves to an array of objects, each containing
  * the page number, extracted name, CUIL, and the buffer of the single-page PDF.
  */
-export async function parsePDFDetailsWithBuffers(pdfBuffer: Buffer) {
+export async function parsePDFDetailsWithBuffers(pdfBuffer: Buffer, isPaySlip: boolean) {
   const pdfDoc = await PDFDocument.load(pdfBuffer);
   const totalPages = pdfDoc.getPages().length;
-
   // Create an array of promises for processing each page
   const pdfDetailsArray = await Promise.all(
     Array.from({ length: totalPages }, async (_, i) => {
@@ -37,10 +36,9 @@ export async function parsePDFDetailsWithBuffers(pdfBuffer: Buffer) {
       const cuilMatch = pageText.match(/CUIL:\s?(\d{2}-\d{8}-\d)/);
       const cuil = cuilMatch && cuilMatch[1] ? cuilMatch[1] : null;
 
-      // Split the text into lines and extract "name" from line 6
       const lines = pageText.split('\n');
-      const name = lines[6] ? formatName(lines[6]) : null;
-
+      // Split the text into lines and extract "name" from line 6 to Pay slip PDF and line 9 to Salary PDF
+      const name = isPaySlip ? (lines[6] ? formatName(lines[6]) : null) : lines[9] ? formatName(lines[9]) : null;
       // Return the processed details for this page
       return { page: i + 1, name, cuil, buffer: singlePageBuffer };
     })

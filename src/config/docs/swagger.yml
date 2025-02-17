@@ -418,7 +418,7 @@ components:
           example: ABR
         year:
           type: string
-          example: 2024
+          example: 2025
         userId:
           type: string
           example: 6769b8859b5de45dd4723334
@@ -442,7 +442,7 @@ components:
           example: ABR
         year:
           type: string
-          example: 2024
+          example: 2025
         userId:
           type: string
           example: 6769b8859b5de45dd4723334
@@ -508,7 +508,7 @@ components:
             - BS
             - 1° SAC
             - 2° SAC
-            - BOLETA DE PAGO
+            - BOLETAS DE PAGO
         month:
           type: string
           enum:
@@ -526,7 +526,7 @@ components:
             - DIC
         year:
           type: string
-          example: '2024'
+          example: 2025
     ErrorResponse:
       type: object
       properties:

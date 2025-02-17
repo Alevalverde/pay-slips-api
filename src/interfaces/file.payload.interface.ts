@@ -8,6 +8,7 @@ export enum NameFile {
   PAYSLIP = 'BS',
   FIRST_SAC = '1° SAC',
   SECOND_SAC = '2° SAC',
+  BP = 'BOLETAS DE PAGO',
 }
 
 export enum Month {

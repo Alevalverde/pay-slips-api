@@ -52,14 +52,14 @@ class GoogleDriveService {
     }
   }
 
-  async createFolderInGoogleDrive(folderName: string) {
+  async createFolderInGoogleDrive(folderName: string, isPaySlip: boolean) {
     const driveService = await this.createDriveClient();
     try {
       const response = await driveService.files.create({
         requestBody: {
           name: folderName,
           mimeType: 'application/vnd.google-apps.folder',
-          parents: [config.GOOGLE_DRIVE_FOLDER_ID], // Parent folder ID
+          parents: isPaySlip ? [config.FOLDER_ID_PAYSLIP] : [config.FOLDER_ID_SCHOOLFEE], // Parent folder ID
         },
       });
 
