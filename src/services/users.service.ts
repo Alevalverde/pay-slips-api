@@ -1,17 +1,17 @@
 import { Types } from 'mongoose';
 import UserRepository from '@/repositories/user.repository';
 import errors from '@/config/errors';
-import { Pagination, PaginationInfo } from '@/interfaces';
+import {  Pagination, PaginationInfo } from '@/interfaces';
 import { User } from '@/models';
 import { encryptPassword } from '@/utils';
 
 class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async getAllUsers(paginationParams: Pagination) {
-    const { page, limit } = paginationParams;
+  async getAllUsers(queryParams: Pagination & { name?: string }) {
+    const { page, limit } = queryParams;
 
-    const { data, total } = await this.userRepository.getAllUsers(paginationParams);
+    const { data, total } = await this.userRepository.getAllUsers(queryParams);
 
     const pagination: PaginationInfo = {
       count: total,

@@ -139,6 +139,7 @@ paths:
       description: This endpoint returns a list of users with pagination
       operationId: getAllUser
       parameters:
+        - $ref: '#/components/parameters/name'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/page_size'
         - $ref: '#/components/parameters/sort'
@@ -581,6 +582,12 @@ components:
       name: id
       in: path
       required: true
+      schema:
+        type: string
+    name:
+      name: name
+      in: query
+      required: false
       schema:
         type: string
     year:

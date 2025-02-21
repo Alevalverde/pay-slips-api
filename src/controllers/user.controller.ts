@@ -1,15 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import UserService from '@/services/users.service';
 import { formatPaginationParams, prepareResponse } from '@/utils';
-import { PaginationQuery } from '@/interfaces';
 
 class UserController {
   constructor(private readonly userService: UserService) {}
 
   getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const paginationParams = formatPaginationParams(req.query as PaginationQuery);
-      const { data, pagination } = await this.userService.getAllUsers(paginationParams);
+      const queryParams: any = formatPaginationParams(req.query);
+      const { data, pagination } = await this.userService.getAllUsers(queryParams);
       return res.json(prepareResponse(200, null, data, pagination));
     } catch (error) {
       next(error);

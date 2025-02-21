@@ -1,15 +1,17 @@
-export interface PaginationQuery {
+export interface ParamsQuery {
+  name?: string;
   page?: string | number;
   limit?: string | number;
   sort?: string;
   dir?: SortDir;
 }
-export interface PaginationParams extends PaginationQuery {
+
+export interface PaginationParams extends ParamsQuery {
   page_size?: string;
   sort_dir?: string;
 }
 
-export interface Pagination extends PaginationQuery {
+export interface Pagination extends ParamsQuery {
   skip: number;
 }
 

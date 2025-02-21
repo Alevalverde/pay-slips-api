@@ -10,17 +10,23 @@ class UserRepository {
     this.model = this.connection.model<UserModel>('UserModel', UserSchema, 'users');
   }
 
-  async getAllUsers(paginationObject: Pagination) {
-    const { skip, limit, sort, dir } = paginationObject;
+  async getAllUsers(params: Pagination & { name?: string }) {
+    const { skip, limit, sort, dir, name } = params;
+    const filter: any = {};
+    if (name) {
+      filter.name = { $regex: name, $options: 'i' };
+    }
+
     const [data, total] = await Promise.all([
       this.model
-        .find()
+        .find(filter)
         .sort({ [sort as string]: dir as SortDir })
         .skip(skip!)
         .limit(limit as number)
         .lean(),
-      this.model.countDocuments(),
+      this.model.countDocuments(filter),
     ]);
+
     return {
       data,
       total,
@@ -47,6 +53,11 @@ class UserRepository {
 
   async getUserById(userId: Types.ObjectId) {
     return this.model.findOne({ _id: userId }).lean();
+  }
+
+  async getUserByName(name: string) {
+    const regex = new RegExp(name, 'i');
+    return this.model.find({ name: { $regex: regex } }).lean();
   }
 
   async getUserByCuil(cuil: string) {

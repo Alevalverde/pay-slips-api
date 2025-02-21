@@ -1,4 +1,4 @@
-import { Pagination, PaginationParams, PaginationQuery, SortDir } from '@/interfaces';
+import { PaginationParams, SortDir } from '@/interfaces';
 
 const isNumber = (value: string) => !Number.isNaN(parseFloat(value)) && Number.isFinite(value);
 
@@ -53,11 +53,12 @@ export const sortBy = (params: PaginationParams) => {
  * @returns A Pagination object with page, limit, sort, dir, and skip properties.
  * The skip property is calculated as (page - 1) * limit.
  */
-export const formatPaginationParams = (params: PaginationQuery): Pagination => {
-  const { page, limit, sort, dir } = params;
+export const formatPaginationParams = (params: any) => {
+  const { name, page, limit, sort, dir } = params;
   const pageNumber = Number(page);
   const limitNumber = Number(limit);
   return {
+    name: name as String,
     page: pageNumber,
     limit: limitNumber,
     sort: sort as string,
