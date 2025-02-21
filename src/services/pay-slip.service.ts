@@ -109,7 +109,7 @@ class PaySlipService {
 
     try {
       // Dividir pdfDetailsArray en 4 chunks
-      const chunkSize = Math.ceil(pdfDetailsArray.length / 4);
+      const chunkSize = Math.ceil(pdfDetailsArray.length / 2);
       const chunks = chunkArray(pdfDetailsArray, chunkSize);
 
       const uploadResults = [];
@@ -131,24 +131,27 @@ class PaySlipService {
         uploadResults.push(...chunkResults);
 
         if (i < chunks.length - 1) {
-          await delay(1000);
+          await delay(1500);
         }
       }
 
       const session = await this.paySlipRepository.startTransaction();
       try {
         for (const { cuil, name, urlPdf, pdfName } of uploadResults) {
-          const userId = await this.userRepository.getOrUpdateUser(cuil as string, name as string, session);
+          if (cuil) {
+            const userId = await this.userRepository.getOrUpdateUser(cuil as string, name as string, session);
+            
+            const payslipDetails: PaySlip = {
+              month,
+              year,
+              url: urlPdf,
+              name: pdfName,
+              userId: userId._id as Types.ObjectId,
+            };
 
-          const payslipDetails: PaySlip = {
-            month,
-            year,
-            url: urlPdf,
-            name: pdfName,
-            userId: userId._id as Types.ObjectId,
-          };
-
-          await this.paySlipRepository.uploadPaySlip(payslipDetails, session);
+            await this.paySlipRepository.uploadPaySlip(payslipDetails, session);
+          }
+          // TODO: AGREGAR LOS USUARIOS SIN CUIL A UN ARRAY PARA LUEGO RENDERIZAR EN EL FRONT
         }
         await session.commitTransaction();
       } catch (error) {
