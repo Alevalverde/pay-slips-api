@@ -6,6 +6,26 @@ import { FilePayload } from '@/interfaces';
 class PaySlipController {
   constructor(private readonly paySlipService: PaySlipService) {}
 
+  uploadPaySlip = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const file = req.files as Express.Multer.File[];
+
+      const { nameFile, month, year } = req.body;
+
+      const filePayload: FilePayload = {
+        nameFile,
+        month,
+        year,
+      };
+
+      await this.paySlipService.uploadPaySlip(file[0], filePayload);
+
+      return res.json(prepareResponse(200, 'Successful operation'));
+    } catch (error) {
+      next(error);
+    }
+  };
+
   getPaySlip = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
@@ -22,26 +42,6 @@ class PaySlipController {
       const { year } = req.query;
       const paySlips = await this.paySlipService.getPaySlipsByUserId(id, year as string);
       return res.json(prepareResponse(200, null, paySlips));
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  uploadPaySlip = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const file = req.files as Express.Multer.File[];
-
-      const { nameFile, month, year } = req.body;
-
-      const filePayload: FilePayload = {
-        nameFile,
-        month,
-        year,
-      };
-
-      await this.paySlipService.uploadPaySlip(file[0], filePayload);
-
-      return res.json(prepareResponse(200, 'Successful operation'));
     } catch (error) {
       next(error);
     }

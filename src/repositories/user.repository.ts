@@ -1,6 +1,7 @@
 import { Model, Connection, Types, ClientSession } from 'mongoose';
 import { User, UserModel, UserSchema } from '@/models';
 import { Pagination, SortDir } from '@/interfaces';
+import { UserType } from '@/interfaces/enums';
 
 class UserRepository {
   private model: Model<UserModel>;
@@ -30,7 +31,15 @@ class UserRepository {
     return this.model
       .findOneAndUpdate(
         { cuil },
-        { $setOnInsert: { cuil, name, status: true, type: ['prueba'], password: cuil?.replace(/-/g, '') } },
+        {
+          $setOnInsert: {
+            cuil,
+            name,
+            status: true,
+            userType: [UserType.EMPLOYEE, UserType.PAYMENT_HOLDER, UserType.ADMIN],
+            password: cuil?.replace(/-/g, ''),
+          },
+        },
         { new: true, upsert: true, session }
       )
       .lean();
