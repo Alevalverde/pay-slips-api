@@ -214,6 +214,24 @@ paths:
           $ref: '#/components/responses/ForbiddenResponse'
         '500':
           $ref: '#/components/responses/InternalErrorResponse'
+  '/news':
+    get:
+      tags:
+        - News
+      summary: Get all news.
+      description: This endpoint returns a list of news
+      operationId: getAllNews
+      responses:
+        '200':
+          $ref: '#/components/responses/GetAllNewsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
 servers:
   - url: '{protocol}://{domain}{port}/{baseUrl}/{apiVersion}'
     description: Default
@@ -295,6 +313,23 @@ components:
                     type: array
                     items:
                       $ref: '#/components/schemas/Users'
+                  message:
+                    type: string
+                    example: null
+                    nullable: true
+    GetAllNewsResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/StandardResponse'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/News'
                   message:
                     type: string
                     example: null
@@ -497,6 +532,26 @@ components:
         updatedAt:
           type: string
           example: 2024-12-15T00:00:00.000Z
+    News:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        subtitle:
+          type: string
+        body:
+          type: string
+        footer:
+          type: string
+        img:
+          type: string
+        status:
+          type: boolean
+        date:
+          type: string
+          example: 2024-02-15T00:00:00.000Z
     UploadFiles:
       type: object
       properties:

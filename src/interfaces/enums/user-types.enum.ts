@@ -1,5 +1,9 @@
 export enum UserType {
+  EMPLOYEE = 'Empleado',
+  PAYMENT_HOLDER = 'Titular de pago',
+}
+
+export enum Role {
   ADMIN = 'admin',
-  EMPLOYEE = 'employee',
-  PAYMENT_HOLDER = 'payment_holder',
+  USER = 'user',
 }

@@ -22,7 +22,7 @@ export async function processChunks(chunks: any, folderName: string, folderId: s
 
     // Agregar un pequeño retraso entre chunks (excepto en el último)
     if (i < chunks.length - 1) {
-      await delay(1000); // Retraso de 1 segundo
+      await delay(1500); // Retraso de 1 segundo
     }
   }
 

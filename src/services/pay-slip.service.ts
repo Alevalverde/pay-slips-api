@@ -46,75 +46,21 @@ class PaySlipService {
     }
   }
 
-  // async uploadPaySlip(file: Express.Multer.File, filePayload: FilePayload) {
-  //   const { nameFile, month, year } = filePayload;
-  //   const folderName = `${nameFile} - ${month} ${year}`;
-  //   const { pdfDetailsArray, folderId } =
-  //     nameFile === NameFile.BP
-  //       ? await this.uploadFolderToGoogleDrive(file, folderName, false)
-  //       : await this.uploadFolderToGoogleDrive(file, folderName);
-
-  //   try {
-  //     // Dividir pdfDetailsArray en 4 chunks
-  //     const chunkSize = Math.ceil(pdfDetailsArray.length / 3);
-  //     const chunks = chunkArray(pdfDetailsArray, chunkSize);
-
-  //     const uploadResults = await processChunks(chunks, folderName, folderId!);
-
-  //     const session = await this.paySlipRepository.startTransaction();
-  //     try {
-  //       for (const { cuil, name, urlPdf, pdfName } of uploadResults) {
-  //         if (cuil!) {
-  //           const userId = await this.userRepository.getOrUpdateUser(cuil as string, name as string, session);
-
-  //           const payslipDetails: PaySlip = {
-  //             month,
-  //             year,
-  //             url: urlPdf,
-  //             name: pdfName,
-  //             userId: userId._id as Types.ObjectId,
-  //           };
-
-  //           await this.paySlipRepository.uploadPaySlip(payslipDetails, session);
-  //         } else {
-  //           // TODO: AGREGAR LOS USUARIOS SIN CUIL A UN ARRAY PARA LUEGO RENDERIZAR EN EL FRONT
-  //           logger.info('Usuario sin CUIL:', name);
-  //         }
-  //       }
-  //       await session.commitTransaction();
-  //     } catch (error) {
-  //       await session.abortTransaction();
-  //       throw error;
-  //     } finally {
-  //       await session.endSession();
-  //     }
-  //   } catch (error) {
-  //     if (folderId) {
-  //       await this.googleDriveService.deleteFolderFromGoogleDrive(folderId);
-  //     }
-  //     logger.error('Error at PaySlipService.uploadPaySlip ->', error);
-  //     throw error;
-  //   }
-  // }
-
   async uploadPaySlip(file: Express.Multer.File, filePayload: FilePayload) {
     const { nameFile, month, year } = filePayload;
     const folderName = `${nameFile} - ${month} ${year}`;
     let folderId: string | undefined | null;
 
     try {
-      const { pdfDetailsArray, googleFolderId } = await this.uploadFolderToGoogleDrive(
-        file,
-        folderName,
-        nameFile !== NameFile.BP
-      );
+      const isPayslip = nameFile !== NameFile.BP;
+      const { pdfDetailsArray, googleFolderId } = await this.uploadFolderToGoogleDrive(file, folderName, isPayslip);
 
       folderId = googleFolderId;
 
       // Procesar los archivos en chunks
       const uploadResults = await this.processPaySlipsInChunks(pdfDetailsArray, folderName, folderId!);
 
-      await this.savePaySlipsToDatabase(uploadResults, month, year);
+      await this.savePaySlipsToDatabase(uploadResults, month, year, isPayslip);
     } catch (error) {
       if (folderId) {
         await this.googleDriveService.deleteFolderFromGoogleDrive(folderId);
@@ -135,13 +81,18 @@ class PaySlipService {
     return processChunks(chunks, folderName, folderId);
   }
 
-  private async savePaySlipsToDatabase(uploadResults: any, month: string, year: string): Promise<void> {
+  private async savePaySlipsToDatabase(
+    uploadResults: any,
+    month: string,
+    year: string,
+    isPayslip: boolean
+  ): Promise<void> {
     const session = await this.paySlipRepository.startTransaction();
 
     try {
       for (const { cuil, name, urlPdf, pdfName } of uploadResults) {
         if (cuil) {
-          const userId = await this.userRepository.getOrUpdateUser(cuil, name, session);
+          const userId: any = await this.userRepository.getOrUpdateUser(cuil, name, session, isPayslip);
 
           const payslipDetails: PaySlip = {
             month,

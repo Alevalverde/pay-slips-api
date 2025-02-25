@@ -1,7 +1,7 @@
 import { Model, Connection, Types, ClientSession } from 'mongoose';
 import { User, UserModel, UserSchema } from '@/models';
 import { Pagination, SortDir } from '@/interfaces';
-import { UserType } from '@/interfaces/enums';
+import { Role, UserType } from '@/interfaces/enums';
 
 class UserRepository {
   private model: Model<UserModel>;
@@ -33,23 +33,77 @@ class UserRepository {
     };
   }
 
-  async getOrUpdateUser(cuil: string, name: string, session: ClientSession) {
-    return this.model
+  async getOrUpdateUser(cuil: string, name: string, session: ClientSession, isPayslip: boolean) {
+    const userTypeToAdd = isPayslip ? UserType.EMPLOYEE : UserType.PAYMENT_HOLDER;
+
+    const existingUser = await this.model
       .findOneAndUpdate(
         { cuil },
         {
-          $setOnInsert: {
+          $set: {
+            name,
+            status: true,
+            roleUser: Role.USER,
+            password: cuil?.replace(/-/g, ''),
+          },
+          $addToSet: {
+            userType: userTypeToAdd, // Agrega el nuevo userType si no existe
+          },
+        },
+        { new: true, session }
+      )
+      .lean();
+    if (!existingUser) {
+      return this.model.create(
+        [
+          {
             cuil,
             name,
             status: true,
-            userType: [UserType.EMPLOYEE, UserType.PAYMENT_HOLDER, UserType.ADMIN],
+            userType: isPayslip ? [UserType.EMPLOYEE] : [UserType.PAYMENT_HOLDER],
+            roleUser: Role.USER,
             password: cuil?.replace(/-/g, ''),
           },
-        },
-        { new: true, upsert: true, session }
-      )
-      .lean();
+        ],
+        { session }
+      );
+    }
+    return existingUser;
   }
+
+  // async getOrUpdateUser(cuil: string, name: string, session: ClientSession, isPayslip: boolean) {
+  //   const userTypeToAdd = isPayslip ? UserType.EMPLOYEE : UserType.PAYMENT_HOLDER;
+
+  //   // Intenta actualizar el usuario existente
+  //   const existingUser = await this.model.findOneAndUpdate(
+  //     { cuil },
+  //     {
+  //       $addToSet: {
+  //         userType: userTypeToAdd, // Agrega el nuevo userType si no existe
+  //       },
+  //     },
+  //     { new: true, session }
+  //   ).lean();
+
+  //   // Si el usuario no existe, créalo
+  //   if (!existingUser) {
+  //     return this.model.create(
+  //       [
+  //         {
+  //           cuil,
+  //           name,
+  //           status: true,
+  //           userType: isPayslip ? [UserType.EMPLOYEE] : [UserType.PAYMENT_HOLDER],
+  //           roleUser: Role.USER,
+  //           password: cuil?.replace(/-/g, ''),
+  //         },
+  //       ],
+  //       { session }
+  //     );
+  //   }
+
+  //   return existingUser;
+  // }
 
   async getUserById(userId: Types.ObjectId) {
     return this.model.findOne({ _id: userId }).lean();
