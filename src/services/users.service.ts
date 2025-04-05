@@ -8,6 +8,19 @@ import { encryptPassword } from '@/utils';
 class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
+  async register(payload: User) {
+    const { cuil, password } = payload;
+    const user = await this.userRepository.getUserByCuil(cuil);
+    if (user) {
+      throw errors.user.duplicate;
+    }
+    const newUser: User = {
+      password: encryptPassword(password),
+      ...payload,
+    } as User;
+    await this.userRepository.createUser(newUser);
+  }
+
   async getAllUsers(queryParams: Pagination & { name?: string }) {
     const { page, limit } = queryParams;
 

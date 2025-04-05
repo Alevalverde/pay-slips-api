@@ -12,7 +12,7 @@ paths:
   '/register':
     post:
       tags:
-        - Auth
+        - Users
       summary: Register a new user
       description: This endpoint creates a new user
       operationId: RegisterUser
@@ -428,18 +428,33 @@ components:
     UserBody:
       type: object
       properties:
-        name:
-          type: string
-          example: Riquelme, Juan Román
         cuil:
           type: string
           example: 23-12345678-1
+        name:
+          type: string
+          example: Riquelme, Juan Román
         status:
           type: boolean
           example: true
+        userType:
+          type: array
+          example: [Empleado, Titular de pago]
+        roleUser:
+          type: string
+          example: user
         password:
           type: string
-          example: password
+          example: El último 10
+        email:
+          type: string
+          example: riquelme@bocajuniors.com
+        phone:
+          type: string
+          example: 1123456789
+        address:
+          type: string
+          example: Brandsen 805
     PaySlip:
       type: object
       properties:

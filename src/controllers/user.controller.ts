@@ -5,6 +5,15 @@ import { formatPaginationParams, prepareResponse } from '@/utils';
 class UserController {
   constructor(private readonly userService: UserService) {}
 
+  registerUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await this.userService.register(req.body);
+      return res.json(prepareResponse(200, 'Successful operation'));
+    } catch (error) {
+      next(error);
+    }
+  };
+
   getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const queryParams: any = formatPaginationParams(req.query);

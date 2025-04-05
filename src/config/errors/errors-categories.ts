@@ -79,4 +79,22 @@ export const errors = {
       status: 400,
     },
   },
+  login: {
+    accounts: {
+      unauthorized: {
+        key: 'login.accounts.unauthorized',
+        message: 'Credenciales inválidas.',
+        message_eng: 'Invalid credentials.',
+        status: 401,
+      },
+    },
+    users: {
+      not_found: {
+        key: 'login.users.not_found',
+        message: 'El usuario no existe.',
+        message_eng: 'User not found.',
+        status: 404,
+      },
+    },
+  },
 };

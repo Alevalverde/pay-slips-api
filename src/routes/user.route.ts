@@ -4,6 +4,7 @@ import { pagination } from '@/middlewares/pagination.middleware';
 
 const router = Router();
 
+router.post('/register', userController.registerUser);
 router.get('/users', pagination, userController.getAllUsers);
 router.get('/users/:id', userController.getUserById);
 router.patch('/users/:id', userController.updateUserById);

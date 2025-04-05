@@ -9,8 +9,10 @@ import { middleware } from 'express-openapi-validator';
 import { errorLogger, logger as loggerMiddleware } from 'express-winston';
 import util from 'util';
 import process from 'process';
+import passport from 'passport';
 import config from '@/config';
 import { logger } from '@/utils';
+import { generateToken, authenticateJwt } from '../config/passport-config';
 
 interface NodeServer {
   /**
@@ -101,6 +103,9 @@ export default class Server implements NodeServer {
         extended: true,
       })
     );
+
+    // Initialize Passport
+    this.app.use(passport.initialize());
 
     // Use logging middleware
     this.app.use(

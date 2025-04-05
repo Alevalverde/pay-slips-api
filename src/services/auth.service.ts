@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import UserRepository from '@/repositories/user.repository';
 import { User } from '@/models';
 import { encryptPassword } from '@/utils';
@@ -6,18 +7,28 @@ import { errors } from '@/config/errors/errors-categories';
 class AuthService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async register(payload: User) {
-    const { cuil, password } = payload;
-    const user = await this.userRepository.getUserByCuil(cuil);
-    if (user) {
-      throw errors.user.duplicate;
-    }
-    const newUser: User = {
-      password: encryptPassword(password),
-      ...payload,
-    } as User;
-    await this.userRepository.createUser(newUser);
-  }
+ 
+  
+  // async login(user: string, plainTextPassword: string) {
+  //   const userDoc = await this.validateUser(user, plainTextPassword);
+  //   const client = await this.clientRepository.findById(userDoc.client as ObjectId);
+  //   const timezone = client?.timezone || config.DEFAULT_TIMEZONE;
+
+  //   const token = jwt.sign({ _id: userDoc._id, timezone }, config.JWT_SECRET, {
+  //     expiresIn: config.EXPIRE_TIME_TOKEN_USER_LOGGED,
+  //   });
+
+  //   const userInfo: Pick<User, '_id' | 'email' | 'username' | 'role'> & { clientId?: ObjectId; timezone: string } = {
+  //     _id: userDoc._id,
+  //     email: userDoc.email,
+  //     username: userDoc.username,
+  //     clientId: userDoc.client,
+  //     role: userDoc.role,
+  //     timezone,
+  //   };
+
+  //   return { token, userInfo };
+  // }
 
   // async validateUser(user: string, plainTextPassword: string): Promise<User> {
   //   const userDoc: User | null = await this.userRepository.findOne(user);
@@ -31,14 +42,6 @@ class AuthService {
   //   return userDoc;
   // }
 
-  // async login(user: string, plainTextPassword: string) {
-  //   const userDoc = await this.validateUser(user, plainTextPassword);
-  //   const client = await this.clientRepository.findById(userDoc.client as ObjectId);
-  //   const timezone = (client?.timezone || 'America/Argentina/Buenos_Aires') as string;
-
-  //   const token = jwt.sign({ _id: userDoc._id, timezone }, config.JWT_SECRET, {
-  //     expiresIn: config.EXPIRE_TIME_TOKEN_USER_LOGGED,
-  //   });
 
   //   const userInfo: Pick<User, '_id' | 'email' | 'username' | 'role'> & { clientId: ObjectId | undefined } = {
   //     _id: userDoc._id,
