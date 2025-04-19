@@ -20,6 +20,23 @@ paths:
         $ref: '#/components/requestBodies/Login'
       responses:
         '200':
+          $ref: '#/components/responses/SuccessLogin'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/current-user':
+    get:
+      tags:
+        - Auth
+      summary: User verify token
+      description: Checks if a user is authenticated by verifying the provided token.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
           $ref: '#/components/responses/Success'
         '401':
           $ref: '#/components/responses/Unauthorized'
@@ -464,6 +481,13 @@ components:
       description: Internal server error
   schemas:
     LoginResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/LoginData'
+    LoginData:
       type: object
       properties:
         token:

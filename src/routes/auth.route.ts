@@ -4,7 +4,7 @@ import { authController } from '../controllers';
 const router = Router();
 
 router.post('/login', authController.login);
-// router.get('/current-user', authController.currentUser);
+router.get('/current-user', authController.currentUser);
 // router.post('/reset-password/initiate', authController.initiateResetPassword);
 // router.post('/reset-password/complete', authController.completeResetPassword);
 
