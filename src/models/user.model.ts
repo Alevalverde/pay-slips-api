@@ -8,7 +8,7 @@ interface User {
   userType: UserType[];
   roleUser: string;
   password?: string;
-  email?: string  | null;
+  email?: string | null;
   phone?: string | null;
   address?: string | null;
 }
@@ -23,10 +23,9 @@ const UserSchema: Schema = new Schema<UserModel>(
     userType: { type: [String], required: false },
     roleUser: { type: String, required: false },
     password: { type: String, required: false },
-    email : { type: String, required: false },
-    phone : { type: String, required: false },
-    address : { type: String, required: false }
-
+    email: { type: String, required: false },
+    phone: { type: String, required: false },
+    address: { type: String, required: false },
   },
   { timestamps: true, versionKey: false }
 );

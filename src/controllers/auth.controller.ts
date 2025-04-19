@@ -19,7 +19,7 @@ class AuthController {
   currentUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userInfo = await this.authService.getUserInfo(req.user as User);
-      return res.json({ message: 'Valid Token', user: userInfo });
+      return res.json(prepareResponse(200, 'Valid Token', userInfo));
     } catch (error) {
       next(error);
     }

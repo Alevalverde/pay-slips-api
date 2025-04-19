@@ -25,4 +25,4 @@ const NewsSchema: Schema = new Schema<NewsModel>(
   { timestamps: true, versionKey: false }
 );
 
-export { News, NewsModel, NewsSchema }; 
+export { News, NewsModel, NewsSchema };

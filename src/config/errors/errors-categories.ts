@@ -106,5 +106,5 @@ export const errors = {
         status: 404,
       },
     },
-  },  
+  },
 };

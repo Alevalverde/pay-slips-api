@@ -8,6 +8,8 @@ info:
   contact:
     name: Alejandro Valverde
     email: avalverde@midasconsultores.com.ar
+security:
+  - bearerAuth: []
 paths:
   '/login':
     post:
@@ -33,11 +35,9 @@ paths:
         - Auth
       summary: User verify token
       description: Checks if a user is authenticated by verifying the provided token.
-      security:
-        - bearerAuth: []
       responses:
         '200':
-          $ref: '#/components/responses/Success'
+          $ref: '#/components/responses/CurrentUserResponse'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '400':
@@ -327,6 +327,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/LoginResponse'
+    CurrentUserResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CurrentUserResponse'
     CreateSuccess:
       description: Successful operation
       content:
@@ -487,6 +493,18 @@ components:
           properties:
             data:
               $ref: '#/components/schemas/LoginData'
+    CurrentUserResponse:
+      type: object
+      properties:
+        status:
+          type: number
+          example: 200
+        message:
+          type: string
+          example: Valid token
+        data:
+          type: object
+          $ref: '#/components/schemas/CurrentUser'
     LoginData:
       type: object
       properties:
@@ -504,8 +522,8 @@ components:
               example: 23-12345678-1
             email:
               type: string
-              example: qpepito@yopmail.com
-            name: 
+              example: riquelme@bocajuniors.com
+            name:
               type: string
               example: Riquelme, Juan Román
             roleUser:
@@ -514,6 +532,42 @@ components:
             userType:
               type: array
               example: [Empleado, Titular de pago]
+    CurrentUser:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 65e09ad5f946ec037ca1d602
+        cuil:
+          type: string
+          example: 23-12345678-1
+        name:
+          type: string
+          example: Riquelme, Juan Román
+        status:
+          type: boolean
+          example: true
+        userType:
+          type: array
+          example: [Empleado, Titular de pago]
+        roleUser:
+          type: string
+          example: user
+        email:
+          type: string
+          example: riquelme@bocajuniors.com
+        phone:
+          type: string
+          example: 1123456789
+        address:
+          type: string
+          example: Brandsen 805
+        createdAt:
+          type: string
+          example: 2024-12-15T00:00:00.000Z
+        updatedAt:
+          type: string
+          example: 2024-12-15T00:00:00.000Z
     UserBody:
       type: object
       properties:

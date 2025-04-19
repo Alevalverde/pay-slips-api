@@ -80,8 +80,6 @@ class UserRepository {
     return this.model.find({ name: { $regex: regex } }).lean();
   }
 
-
-
   async getUserByCuil(cuil: string) {
     const user = await this.model.findOne({ cuil }).lean();
     return user;
