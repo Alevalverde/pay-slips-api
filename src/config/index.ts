@@ -19,10 +19,11 @@ export default {
   DOCS_ENDPOINT: '/api-docs',
   DIR_SWAGGER: './src/config/docs/swagger.yml',
   DIR_ERRORS: './src/config/errors/error.yml',
+  JWT_SECRET: String(process.env.JWT_SECRET),
   BASE_DOMAIN: process.env.BASE_DOMAIN ?? '',
   MONGO_URL: process.env.MONGO_URL ?? '',
   MAX_FILE_SIZE_BYTES: process.env.MAX_FILE_SIZE_BYTES ?? '10485760',
+  GOOGLE_CREDENTIAL: process.env.GOOGLE_CREDENTIAL ?? '',
   FOLDER_ID_PAYSLIP: process.env.FOLDER_ID_PAYSLIP ?? '',
   FOLDER_ID_SCHOOLFEE: process.env.FOLDER_ID_SCHOOLFEE ?? '',
-  GOOGLE_CREDENTIAL: process.env.GOOGLE_CREDENTIAL ?? '',
 };

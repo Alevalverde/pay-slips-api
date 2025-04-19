@@ -7,3 +7,4 @@ export async function encryptPassword(pass?: string) {
   const passEncripted = await bcrypt.hash(pass, 10);
   return passEncripted;
 }
+ 

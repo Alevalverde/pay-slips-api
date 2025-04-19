@@ -71,40 +71,6 @@ class UserRepository {
     return existingUser;
   }
 
-  // async getOrUpdateUser(cuil: string, name: string, session: ClientSession, isPayslip: boolean) {
-  //   const userTypeToAdd = isPayslip ? UserType.EMPLOYEE : UserType.PAYMENT_HOLDER;
-
-  //   // Intenta actualizar el usuario existente
-  //   const existingUser = await this.model.findOneAndUpdate(
-  //     { cuil },
-  //     {
-  //       $addToSet: {
-  //         userType: userTypeToAdd, // Agrega el nuevo userType si no existe
-  //       },
-  //     },
-  //     { new: true, session }
-  //   ).lean();
-
-  //   // Si el usuario no existe, créalo
-  //   if (!existingUser) {
-  //     return this.model.create(
-  //       [
-  //         {
-  //           cuil,
-  //           name,
-  //           status: true,
-  //           userType: isPayslip ? [UserType.EMPLOYEE] : [UserType.PAYMENT_HOLDER],
-  //           roleUser: Role.USER,
-  //           password: cuil?.replace(/-/g, ''),
-  //         },
-  //       ],
-  //       { session }
-  //     );
-  //   }
-
-  //   return existingUser;
-  // }
-
   async getUserById(userId: Types.ObjectId) {
     return this.model.findOne({ _id: userId }).lean();
   }
@@ -113,6 +79,8 @@ class UserRepository {
     const regex = new RegExp(name, 'i');
     return this.model.find({ name: { $regex: regex } }).lean();
   }
+
+
 
   async getUserByCuil(cuil: string) {
     const user = await this.model.findOne({ cuil }).lean();

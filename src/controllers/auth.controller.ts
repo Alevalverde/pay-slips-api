@@ -1,22 +1,19 @@
-// import { NextFunction, Request, Response } from 'express';
-// import { prepareResponse } from '@/utils';
+import { NextFunction, Request, Response } from 'express';
+import { prepareResponse } from '@/utils';
 import AuthService from '@/services/auth.service';
-// import { User } from '@/models';
 
 class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  
-
-  // login = async (req: Request, res: Response, next: NextFunction) => {
-  //   try {
-  //     const { user, password } = req.body;
-      // const { token, userInfo } = await this.authService.login(user, password);
-      // return res.json(prepareResponse(200, 'Successful operation', { token, userInfo }));
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // };
+  login = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { cuil, password } = req.body;
+      const { token, userData } = await this.authService.login(cuil, password);
+      return res.json(prepareResponse(200, 'Successful operation', { token, userData }));
+    } catch (error) {
+      next(error);
+    }
+  };
 
   // currentUser = async (req: Request, res: Response, next: NextFunction) => {
   //   try {

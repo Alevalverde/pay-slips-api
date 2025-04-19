@@ -9,26 +9,24 @@ info:
     name: Alejandro Valverde
     email: avalverde@midasconsultores.com.ar
 paths:
-  '/register':
+  '/login':
     post:
       tags:
-        - Users
-      summary: Register a new user
-      description: This endpoint creates a new user
-      operationId: RegisterUser
+        - Auth
+      summary: User login
+      description: This endpoint allows a user to login
+      operationId: login
       requestBody:
-        $ref: '#/components/requestBodies/CreateUser'
+        $ref: '#/components/requestBodies/Login'
       responses:
         '200':
-          $ref: '#/components/responses/GetUserResponse'
-        '400':
-          $ref: '#/components/responses/BadRequestResponse'
+          $ref: '#/components/responses/Success'
         '401':
-          $ref: '#/components/responses/UnauthorizedResponse'
-        '403':
-          $ref: '#/components/responses/ForbiddenResponse'
+          $ref: '#/components/responses/Unauthorized'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '500':
-          $ref: '#/components/responses/InternalErrorResponse'
+          $ref: '#/components/responses/InternalServerError'
   '/users/{id}/pay-slips':
     get:
       tags:
@@ -110,7 +108,7 @@ paths:
           $ref: '#/components/responses/ForbiddenResponse'
         '500':
           $ref: '#/components/responses/InternalErrorResponse'
-  '/pay-slips/upload':
+  '/pay-slips':
     post:
       tags:
         - Pay Slips
@@ -131,7 +129,26 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/users/':
+  '/users':
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      description: This endpoint creates a new user
+      operationId: CreateUser
+      requestBody:
+        $ref: '#/components/requestBodies/CreateUser'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetUserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+        '500':
+          $ref: '#/components/responses/InternalErrorResponse'
     get:
       tags:
         - Users
@@ -253,6 +270,21 @@ servers:
         default: 'v1'
 components:
   requestBodies:
+    Login:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              cuil:
+                type: string
+                example: 12-34567899-0
+              password:
+                type: string
+                example: El último 10
+            required:
+              - cuil
+              - password
     CreateUser:
       content:
         application/json:
@@ -272,6 +304,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/StandardResponse'
+    SuccessLogin:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginResponse'
     CreateSuccess:
       description: Successful operation
       content:
@@ -425,6 +463,33 @@ components:
     InternalServerError:
       description: Internal server error
   schemas:
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        userData:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: 65e09ad5f946ec037ca1d602
+            cuil:
+              type: string
+              example: 23-12345678-1
+            email:
+              type: string
+              example: qpepito@yopmail.com
+            name: 
+              type: string
+              example: Riquelme, Juan Román
+            roleUser:
+              type: string
+              example: user
+            userType:
+              type: array
+              example: [Empleado, Titular de pago]
     UserBody:
       type: object
       properties:

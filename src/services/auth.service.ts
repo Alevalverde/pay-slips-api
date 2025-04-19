@@ -1,47 +1,51 @@
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import UserRepository from '@/repositories/user.repository';
 import { User } from '@/models';
-import { encryptPassword } from '@/utils';
+import config from '@/config';
 import { errors } from '@/config/errors/errors-categories';
 
 class AuthService {
   constructor(private readonly userRepository: UserRepository) {}
 
- 
-  
-  // async login(user: string, plainTextPassword: string) {
-  //   const userDoc = await this.validateUser(user, plainTextPassword);
-  //   const client = await this.clientRepository.findById(userDoc.client as ObjectId);
-  //   const timezone = client?.timezone || config.DEFAULT_TIMEZONE;
+  async login(cuil: string, plainTextPassword: string) {
+    const validatedUser: any = await this.validateUser(cuil, plainTextPassword);
 
-  //   const token = jwt.sign({ _id: userDoc._id, timezone }, config.JWT_SECRET, {
-  //     expiresIn: config.EXPIRE_TIME_TOKEN_USER_LOGGED,
-  //   });
+    const token = jwt.sign({ _id: validatedUser._id }, config.JWT_SECRET);
 
-  //   const userInfo: Pick<User, '_id' | 'email' | 'username' | 'role'> & { clientId?: ObjectId; timezone: string } = {
-  //     _id: userDoc._id,
-  //     email: userDoc.email,
-  //     username: userDoc.username,
-  //     clientId: userDoc.client,
-  //     role: userDoc.role,
-  //     timezone,
-  //   };
+    const userData = {
+      _id: validatedUser._id,
+      cuil: validatedUser.cuil,
+      email: validatedUser.email,
+      name: validatedUser.name,
+      roleUser: validatedUser.roleUser,
+      userType: validatedUser.userType,
+    };
 
-  //   return { token, userInfo };
-  // }
+    return { token, userData };
+  }
 
-  // async validateUser(user: string, plainTextPassword: string): Promise<User> {
-  //   const userDoc: User | null = await this.userRepository.findOne(user);
-  //   if (!userDoc) {
-  //     throw errors.login.users.not_found;
-  //   }
-  //   const isMatch = await bcrypt.compare(plainTextPassword, userDoc.password);
-  //   if (!isMatch) {
-  //     throw errors.login.accounts.unauthorized;
-  //   }
-  //   return userDoc;
-  // }
+  async validateUser(cuil: string, plainPass: string): Promise<User> {
+    if (!cuil || !plainPass) {
+      throw errors.login.accounts.invalidInput;
+    }
+    const user = await this.userRepository.getUserByCuil(cuil);
+    if (!user) {
+      throw errors.login.accounts.unauthorized;
+    }
+    const isPasswordValid = await this.comparePasswords(plainPass, user.password!);
+    if (!isPasswordValid) {
+      throw errors.login.accounts.unauthorized;
+    }
+    return user;
+  }
 
+  private async comparePasswords(plainPass: string, storedPass: string): Promise<boolean> {
+    if (storedPass.startsWith('$2a$') || storedPass.startsWith('$2b$')) {
+      return bcrypt.compare(plainPass, storedPass);
+    }
+    return plainPass === storedPass;
+  }
 
   //   const userInfo: Pick<User, '_id' | 'email' | 'username' | 'role'> & { clientId: ObjectId | undefined } = {
   //     _id: userDoc._id,

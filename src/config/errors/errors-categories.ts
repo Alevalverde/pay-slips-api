@@ -87,14 +87,24 @@ export const errors = {
         message_eng: 'Invalid credentials.',
         status: 401,
       },
-    },
-    users: {
-      not_found: {
-        key: 'login.users.not_found',
-        message: 'El usuario no existe.',
+      invalidInput: {
+        key: 'login.accounts.invalidInput',
+        message: 'CUIL o contraseña no proporcionados.',
+        message_eng: 'CUIL or password not provided.',
+        status: 400,
+      },
+      passwordTooLong: {
+        key: 'login.accounts.passwordTooLong',
+        message: 'La contraseña excede la longitud máxima permitida.',
+        message_eng: 'Password exceeds maximum allowed length.',
+        status: 400,
+      },
+      userNotFound: {
+        key: 'login.accounts.userNotFound',
+        message: 'Usuario no encontrado.',
         message_eng: 'User not found.',
         status: 404,
       },
     },
-  },
+  },  
 };

@@ -1,23 +1,24 @@
 import { Types } from 'mongoose';
 import UserRepository from '@/repositories/user.repository';
 import errors from '@/config/errors';
-import {  Pagination, PaginationInfo } from '@/interfaces';
+import { Pagination, PaginationInfo } from '@/interfaces';
 import { User } from '@/models';
 import { encryptPassword } from '@/utils';
 
 class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async register(payload: User) {
+  async createUser(payload: User) {
     const { cuil, password } = payload;
     const user = await this.userRepository.getUserByCuil(cuil);
     if (user) {
       throw errors.user.duplicate;
     }
     const newUser: User = {
-      password: encryptPassword(password),
       ...payload,
-    } as User;
+      password: await encryptPassword(password),
+    };
+
     await this.userRepository.createUser(newUser);
   }
 
